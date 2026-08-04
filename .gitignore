@@ -1,2 +1,13 @@
-.atl
+dist/
+node_modules/
+*.log
+.env
+.env.*
+key-*.json
+*-credentials.json
+coverage/
+openspec/
+package-lock.json
+.github/
+.atl/
 .claude

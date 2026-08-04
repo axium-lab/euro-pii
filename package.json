@@ -1,0 +1,45 @@
+{
+  "name": "@axium-lab/nerium",
+  "version": "0.1.0",
+  "description": "Regex-only PII detection and anonymization for European entities",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.dev.azure.com:v3/axium-lab/pocs/documentation-NER"
+  },
+  "publishConfig": {
+    "@axium-lab:registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "prepare": "bun run build",
+    "typecheck": "tsc --noEmit",
+    "manual": "bun tests/manual.ts",
+    "dev": "bun --watch tests/manual.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
