@@ -5,49 +5,51 @@ import { DOCUMENTS } from '../fixtures/documents';
 const ner = new Nerium();
 
 /**
- * Las entidades esperadas que no han aparecido.
+ * Expected entities that did not show up.
  *
- * Este escenario existe para esto: es lo unico que comprueba COBERTURA. Si sale
- * con codigo distinto de 0, el lanzador lo propaga y te enteras. Sin esto
- * imprimiria "FALTA" y saldria con 0, que es lo mismo que no comprobar nada.
+ * This is why the scenario exists: it is the only one that checks COVERAGE. It
+ * exits non-zero when something is missing and the runner propagates that, so
+ * you find out. Printing "MISSING" and exiting 0 would be the same as checking
+ * nothing at all.
  */
-const ausentes: string[] = [];
+const missing: string[] = [];
 
 for (const [country, { text, expected }] of Object.entries(DOCUMENTS)) {
   const result = ner.text(text, true);
-  if (result.blocked) throw new Error('inesperado');
+  if (result.blocked) throw new Error(`Unexpected block for ${country}.`);
 
-  const detectadas = new Set(result.entities.map((d) => d.entity));
-  const delPais = new Set<string>(CATALOG[country as keyof typeof CATALOG]);
+  const detected = new Set(result.entities.map((d) => d.entity));
+  const ofCountry = new Set<string>(CATALOG[country as keyof typeof CATALOG]);
 
   console.log(`\n════ ${country} ═══════════════════════════════════════`);
   console.log(JSON.stringify(result, null, 2));
 
-  console.log(`\n   esperadas y detectadas:`);
+  console.log(`\n   expected and detected:`);
   for (const name of expected) {
-    const detectada = detectadas.has(name);
-    if (!detectada) ausentes.push(`${country}/${name}`);
-    console.log(`     ${detectada ? 'ok  ' : 'FALTA'} ${name}`);
+    const found = detected.has(name);
+    if (!found) missing.push(`${country}/${name}`);
+    console.log(`     ${found ? 'ok     ' : 'MISSING'} ${name}`);
   }
 
-  // Las del pais que no estan en `expected` estan tapadas por una colision.
-  const tapadas = [...delPais].filter(
-    (name) => !detectadas.has(name as never) && !expected.includes(name as never),
+  // Entities of this country that are not in `expected` lost to a collision.
+  const shadowed = [...ofCountry].filter(
+    (name) => !detected.has(name as never) && !expected.includes(name as never),
   );
-  if (tapadas.length > 0) {
-    console.log(`   tapadas por colision: ${tapadas.join(', ')}`);
+  if (shadowed.length > 0) {
+    console.log(`   shadowed by a collision: ${shadowed.join(', ')}`);
   }
 
-  // Lo que sale y no es de este pais son las multipais, sobre todo DATE_TIME.
-  const deOtros = [...detectadas].filter((name) => !delPais.has(name));
-  if (deOtros.length > 0) {
-    console.log(`   ademas, multipais o de otro pais: ${deOtros.join(', ')}`);
+  // Anything detected that is not from this country is multi-country, and it is
+  // almost always DATE_TIME.
+  const fromElsewhere = [...detected].filter((name) => !ofCountry.has(name));
+  if (fromElsewhere.length > 0) {
+    console.log(`   also multi-country or foreign: ${fromElsewhere.join(', ')}`);
   }
 }
 
-if (ausentes.length > 0) {
-  console.log(`\nFALTAN ${ausentes.length}: ${ausentes.join(', ')}`);
+if (missing.length > 0) {
+  console.log(`\nMISSING ${missing.length}: ${missing.join(', ')}`);
   process.exit(1);
 }
 
-console.log('\ntodas las entidades esperadas aparecen en su documento');
+console.log('\nevery expected entity shows up in its own document');

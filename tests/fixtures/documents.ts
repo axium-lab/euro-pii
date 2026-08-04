@@ -43,21 +43,22 @@ export const EXAMPLE_TEXT_ALL_ENTITIES = Object.values(DOCUMENTS)
   .map((document) => document.text)
   .join('\n\n---\n\n');
 
-// ── textos cortos para casos concretos ──────────────────────────────────────
+// ── short texts, one concern each ───────────────────────────────────────────
 
-/** El mismo NIF dos veces, con el checksum mal. Offsets 17-26 y 40-49. */
-export const REPETIDO = ' PEdro losas con 56565656X y Lilian con 56565656X';
+/** The same NIF twice, with a failing checksum. Offsets 17-26 and 40-49. */
+export const SAME_NIF_TWICE = ' PEdro losas con 56565656X y Lilian con 56565656X';
 
-/** Dos personas, dos NIF distintos y validos. */
-export const DOS_DISTINTOS = 'Pedro 12345678Z y Lilian 87654321X';
+/** Two people, two different valid NIF. */
+export const TWO_DIFFERENT_NIF = 'Pedro 12345678Z y Lilian 87654321X';
 
-/** Con separador: el checksum solo funciona sobre la cadena normalizada. */
-export const CON_GUION = 'DNI: 12345678-Z';
+/** With a separator: the checksum only works on the sanitized string. */
+export const NIF_WITH_DASH = 'DNI: 12345678-Z';
 
-/** Minusculas: sin el flag `i` esta deteccion se pierde. */
-export const MINUSCULAS = 'nif 12345678z';
+/** Lowercase: without the `i` flag this detection is lost. */
+export const NIF_LOWERCASE = 'nif 12345678z';
 
-/** Palabra de contexto junto a un checksum que falla: sube el score. */
-export const CON_CONTEXTO = 'el nif 56565656X del cliente';
+/** A context word next to a failing checksum: raises the score. */
+export const BAD_CHECKSUM_WITH_CONTEXT = 'el nif 56565656X del cliente';
 
-export const LIMPIO = 'Pedro Losas no aporta ningún identificador aquí.';
+/** Carries a person name, which this library cannot see. */
+export const NO_IDENTIFIERS = 'Pedro Losas no aporta ningún identificador aquí.';

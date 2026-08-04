@@ -1,32 +1,34 @@
 import { Nerium, REGISTRY } from '../../src/index';
 
-// Ojo: JSON.stringify se come `validation.run` porque es una funcion. Queda su
-// `kind`, que es lo que interesa mirar aqui.
-console.log('\n── registry completo');
+// Careful: JSON.stringify drops `validation.run` because it is a function. Its
+// `kind` survives, which is the part worth looking at here.
+console.log('\n── full registry');
 console.log(JSON.stringify(new Nerium().supported_entities(), null, 2));
 
-console.log('\n── agrupado por categoria');
-const porCategoria = new Map<string, string[]>();
+console.log('\n── grouped by category');
+const byCategory = new Map<string, string[]>();
 for (const entity of REGISTRY) {
-  porCategoria.set(entity.category, [
-    ...(porCategoria.get(entity.category) ?? []),
+  byCategory.set(entity.category, [
+    ...(byCategory.get(entity.category) ?? []),
     `${entity.name}(${entity.country})`,
   ]);
 }
 console.log(
-  JSON.stringify(Object.fromEntries([...porCategoria].sort()), null, 2),
+  JSON.stringify(Object.fromEntries([...byCategory].sort()), null, 2),
 );
 
-console.log('\n── cuentas');
+console.log('\n── counts');
 console.log(
   JSON.stringify(
     {
-      entidades: REGISTRY.length,
-      patrones: REGISTRY.reduce((total, e) => total + e.patterns.length, 0),
-      con_checksum: REGISTRY.filter((e) => e.validation?.kind === 'checksum')
+      entities: REGISTRY.length,
+      patterns: REGISTRY.reduce((total, e) => total + e.patterns.length, 0),
+      with_checksum: REGISTRY.filter((e) => e.validation?.kind === 'checksum')
         .length,
-      con_filtro: REGISTRY.filter((e) => e.validation?.kind === 'filter').length,
-      sin_validacion: REGISTRY.filter((e) => e.validation === undefined).length,
+      with_filter: REGISTRY.filter((e) => e.validation?.kind === 'filter')
+        .length,
+      without_validation: REGISTRY.filter((e) => e.validation === undefined)
+        .length,
     },
     null,
     2,

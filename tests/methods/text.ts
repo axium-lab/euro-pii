@@ -1,40 +1,40 @@
 import { Nerium } from '../../src/index';
 import {
-  CON_CONTEXTO,
-  CON_GUION,
-  DOS_DISTINTOS,
+  BAD_CHECKSUM_WITH_CONTEXT,
   EXAMPLE_TEXT_ALL_ES_ENTITIES,
-  LIMPIO,
-  MINUSCULAS,
-  REPETIDO,
+  NIF_LOWERCASE,
+  NIF_WITH_DASH,
+  NO_IDENTIFIERS,
+  SAME_NIF_TWICE,
+  TWO_DIFFERENT_NIF,
 } from '../fixtures/documents';
 
 const ner = new Nerium();
 
-const escenarios = {
-  documento_es: EXAMPLE_TEXT_ALL_ES_ENTITIES,
-  // mismo_nif_dos_veces: REPETIDO,
-  // dos_nif_distintos: DOS_DISTINTOS,
-  // con_guion: CON_GUION,
-  // en_minusculas: MINUSCULAS,
-  // checksum_malo_con_contexto: CON_CONTEXTO,
-  // texto_limpio: LIMPIO,
+const scenarios = {
+  spanish_document: EXAMPLE_TEXT_ALL_ES_ENTITIES,
+  same_nif_twice: SAME_NIF_TWICE,
+  two_different_nif: TWO_DIFFERENT_NIF,
+  nif_with_dash: NIF_WITH_DASH,
+  nif_lowercase: NIF_LOWERCASE,
+  bad_checksum_with_context: BAD_CHECKSUM_WITH_CONTEXT,
+  no_identifiers: NO_IDENTIFIERS,
 };
 
-for (const [nombre, texto] of Object.entries(escenarios)) {
-  console.log(`\n── ${nombre}`);
-  console.log(JSON.stringify(ner.text(texto, true), null, 2));
+for (const [name, text] of Object.entries(scenarios)) {
+  console.log(`\n── ${name}`);
+  console.log(JSON.stringify(ner.text(text, true), null, 2));
 }
 
-// `anonymizes = false` bloquea cuando hay DETECCIONES, y el resultado bloqueado
-// no lleva texto. Ojo con leer "sin detecciones" como "sin datos personales":
-// LIMPIO contiene "Pedro Losas", que es PII de manual, pero PERSON necesita un
-// modelo y esta libreria no lo tiene. `blocked: false` significa "no he
-// encontrado nada de lo que se buscar", no "este texto es seguro".
-console.log('\n── con detecciones, anonymizes = false -> bloquea');
+// `anonymizes = false` blocks when there are DETECTIONS, and the blocked result
+// carries no text. Do not read "no detections" as "no personal data":
+// NO_IDENTIFIERS contains "Pedro Losas", which is textbook PII, but PERSON needs
+// a model and this library has none. `blocked: false` means "I found nothing I
+// know how to look for", not "this text is safe".
+console.log('\n── with detections, anonymizes = false -> blocks');
 console.log(
   JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, false), null, 2),
 );
 
-console.log('\n── sin detecciones, anonymizes = false -> NO bloquea');
-console.log(JSON.stringify(ner.text(LIMPIO, false), null, 2));
+console.log('\n── without detections, anonymizes = false -> does NOT block');
+console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, false), null, 2));
