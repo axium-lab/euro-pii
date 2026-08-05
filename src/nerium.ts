@@ -16,26 +16,10 @@ const CONTEXT_WINDOW_CHARS = 40;
 
 /**
  * The token that replaces a detection.
- *
- * No ordinal on purpose: every ES_NIF becomes `<ES_NIF>`, so two different
- * people read the same downstream. Numbering them (`<ES_NIF_1>`, `<ES_NIF_2>`)
- * would keep them apart, at the cost of a noisier text.
  */
 const placeholder = (detection: Detection) => `<${detection.entity}>`;
 
-/**
- * Regex-only PII detection and anonymization for European entities.
- *
- * There is nothing to configure: `new Nerium().text(document, true)` runs the
- * whole registry. Results carry `category` and `country`, so narrowing them down
- * is a filter over the output rather than a setting on the way in.
- */
 export class Nerium implements Methods {
-  /**
-   * Finds every entity in `text` and gives back the masked text plus what was
-   * found. With `anonymizes = false` a text carrying PII is blocked instead,
-   * and the blocked result carries no text at all.
-   */
   text(text: string, anonymizes: boolean): ScanResult {
     const entities = detect(text);
 
