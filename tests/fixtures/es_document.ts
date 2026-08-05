@@ -7,6 +7,10 @@ El titular presenta su NIF 12345678Z para formalizar el contrato.
 Como identificación de extranjero se registra el NIE X1234567L.
 También se adjunta el pasaporte ABC123456.
 
+DOCUMENTACIÓN EXTRANJERA
+
+El cliente aporta además su Personalausweis alemán C10000007.
+
 DATOS DE CONTACTO
 
 El correo electrónico del titular es pedro.garcia@example.com.
@@ -55,6 +59,7 @@ La fecha corta de vencimiento es 12/27.
 
 La marca temporal de creación es 2025-12-25T14:30:45Z.
 Otra operación se registró en 2025-12-25T14:30:45.123+01:00.
+y DNI aleman L01X00T47
 `;
 
 export const ES_EXPECTED = [
@@ -72,4 +77,7 @@ export const ES_EXPECTED = [
   'ES_NIF',
   'ES_NIE',
   'ES_PASSPORT',
+
+  // Extranjeras: el registro corre entero, sin filtro por país
+  'DE_ID_CARD',
 ] as const;

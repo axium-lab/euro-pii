@@ -13,12 +13,12 @@ const ner = new Nerium();
 
 const scenarios = {
   spanish_document: EXAMPLE_TEXT_ALL_ES_ENTITIES,
-  // same_nif_twice: SAME_NIF_TWICE,
-  // two_different_nif: TWO_DIFFERENT_NIF,
-  // nif_with_dash: NIF_WITH_DASH,
-  // nif_lowercase: NIF_LOWERCASE,
-  // bad_checksum_with_context: BAD_CHECKSUM_WITH_CONTEXT,
-  // no_identifiers: NO_IDENTIFIERS,
+  same_nif_twice: SAME_NIF_TWICE,
+  two_different_nif: TWO_DIFFERENT_NIF,
+  nif_with_dash: NIF_WITH_DASH,
+  nif_lowercase: NIF_LOWERCASE,
+  bad_checksum_with_context: BAD_CHECKSUM_WITH_CONTEXT,
+  no_identifiers: NO_IDENTIFIERS,
 };
 
 for (const [name, text] of Object.entries(scenarios)) {

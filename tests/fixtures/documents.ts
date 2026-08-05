@@ -46,7 +46,8 @@ export const EXAMPLE_TEXT_ALL_ENTITIES = Object.values(DOCUMENTS)
 // ── short texts, one concern each ───────────────────────────────────────────
 
 /** The same NIF twice, with a failing checksum. Offsets 17-26 and 40-49. */
-export const SAME_NIF_TWICE = ' PEdro losas con 56565656X y Lilian con 56565656X';
+export const SAME_NIF_TWICE =
+  ' PEdro losas con 56565656X y Lilian con 56565656X';
 
 /** Two people, two different valid NIF. */
 export const TWO_DIFFERENT_NIF = 'Pedro 12345678Z y Lilian 87654321X';
@@ -61,4 +62,5 @@ export const NIF_LOWERCASE = 'nif 12345678z';
 export const BAD_CHECKSUM_WITH_CONTEXT = 'el nif 56565656X del cliente';
 
 /** Carries a person name, which this library cannot see. */
-export const NO_IDENTIFIERS = 'Pedro Losas no aporta ningún identificador aquí.';
+export const NO_IDENTIFIERS =
+  'Pedro Losas no aporta ningún identificador aquí.';
