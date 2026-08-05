@@ -3,16 +3,16 @@ import type { Detection, Entity, Methods, ScanResult } from './core/types';
 import { REGISTRY } from './entities/countries';
 
 /** Detections scoring below this are dropped. */
-const THRESHOLD = 0.4;
+const MIN_SCORE = 0.4;
 
 /** Added to the base score when a context term shows up near the match. */
 const CONTEXT_BOOST = 0.35;
 
-/** No boosted detection lands below this, however low its base score was. */
-const CONTEXT_FLOOR = 0.4;
+/** The boost never leaves a detection below this, however low its base score. */
+const MIN_SCORE_AFTER_BOOST = 0.4;
 
-/** Characters scanned on each side of a match looking for context terms. */
-const CONTEXT_WINDOW = 40;
+/** Scanned on each side of a match looking for context terms. */
+const CONTEXT_WINDOW_CHARS = 40;
 
 /**
  * The token that replaces a detection.
@@ -77,7 +77,7 @@ function detect(text: string): Detection[] {
         const value = match[0];
         const start = match.index;
 
-        if (value === '' || start === undefined) continue;
+        if (value === '') continue;
 
         const scored = score(entity, pattern.score, text, start, value);
         if (scored === null) continue;
@@ -108,29 +108,32 @@ function score(
   start: number,
   value: string,
 ): Pick<Detection, 'score' | 'confirmedBy'> | null {
+  const validation = entity.validation;
+  const verdict = validation?.run(sanitize(value), value) ?? null;
+
+  // A `filter` never confirms, so a `true` coming from one is ignored.
+  if (verdict === false && validation?.kind === 'filter') return null;
+
+  // A failed checksum is not fatal: the context below can still rescue it.
+  if (verdict === true && validation?.kind === 'checksum') {
+    return { score: 1, confirmedBy: 'checksum' };
+  }
+
   let current = base;
   let confirmedBy: Detection['confirmedBy'] = null;
 
-  const verdict = entity.validation?.run(sanitize(value), value) ?? null;
-
-  // A `filter` never confirms, so a `true` coming from one is ignored.
-  if (verdict === true && entity.validation?.kind === 'checksum') {
-    current = 1;
-    confirmedBy = 'checksum';
-  } else if (verdict === false) {
-    if (entity.validation?.kind === 'filter') return null;
-  }
-
   if (
-    confirmedBy === null &&
     entity.context !== undefined &&
     nearby(text, start, value.length, entity.context)
   ) {
-    current = Math.min(1, Math.max(CONTEXT_FLOOR, current + CONTEXT_BOOST));
+    current = Math.min(
+      1,
+      Math.max(MIN_SCORE_AFTER_BOOST, current + CONTEXT_BOOST),
+    );
     confirmedBy = 'context';
   }
 
-  if (current < THRESHOLD) return null;
+  if (current < MIN_SCORE) return null;
 
   return { score: Math.round(current * 100) / 100, confirmedBy };
 }
@@ -151,8 +154,8 @@ function nearby(
   terms: readonly string[],
 ): boolean {
   const around = text.slice(
-    Math.max(0, start - CONTEXT_WINDOW),
-    start + length + CONTEXT_WINDOW,
+    Math.max(0, start - CONTEXT_WINDOW_CHARS),
+    start + length + CONTEXT_WINDOW_CHARS,
   );
 
   return terms.some((term) => {

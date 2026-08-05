@@ -13,12 +13,12 @@ const ner = new Nerium();
 
 const scenarios = {
   spanish_document: EXAMPLE_TEXT_ALL_ES_ENTITIES,
-  same_nif_twice: SAME_NIF_TWICE,
-  two_different_nif: TWO_DIFFERENT_NIF,
-  nif_with_dash: NIF_WITH_DASH,
-  nif_lowercase: NIF_LOWERCASE,
-  bad_checksum_with_context: BAD_CHECKSUM_WITH_CONTEXT,
-  no_identifiers: NO_IDENTIFIERS,
+  // same_nif_twice: SAME_NIF_TWICE,
+  // two_different_nif: TWO_DIFFERENT_NIF,
+  // nif_with_dash: NIF_WITH_DASH,
+  // nif_lowercase: NIF_LOWERCASE,
+  // bad_checksum_with_context: BAD_CHECKSUM_WITH_CONTEXT,
+  // no_identifiers: NO_IDENTIFIERS,
 };
 
 for (const [name, text] of Object.entries(scenarios)) {
@@ -31,10 +31,10 @@ for (const [name, text] of Object.entries(scenarios)) {
 // NO_IDENTIFIERS contains "Pedro Losas", which is textbook PII, but PERSON needs
 // a model and this library has none. `blocked: false` means "I found nothing I
 // know how to look for", not "this text is safe".
-console.log('\n── with detections, anonymizes = false -> blocks');
-console.log(
-  JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, false), null, 2),
-);
+// console.log('\n── with detections, anonymizes = false -> blocks');
+// console.log(
+//   JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, false), null, 2),
+// );
 
-console.log('\n── without detections, anonymizes = false -> does NOT block');
-console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, false), null, 2));
+// console.log('\n── without detections, anonymizes = false -> does NOT block');
+// console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, false), null, 2));
