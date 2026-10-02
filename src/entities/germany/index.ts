@@ -1,0 +1,13 @@
+export { DE_BSNR } from './bsnr';
+export { DE_FUEHRERSCHEIN } from './fuehrerschein';
+export { DE_HANDELSREGISTER } from './handelsregister';
+export { DE_HEALTH_INSURANCE } from './health-insurance';
+export { DE_ID_CARD } from './id-card';
+export { DE_KFZ } from './kfz';
+export { DE_LANR } from './lanr';
+export { DE_PASSPORT } from './passport';
+export { DE_PLZ } from './plz';
+export { DE_SOCIAL_SECURITY } from './social-security';
+export { DE_TAX_ID } from './tax-id';
+export { DE_TAX_NUMBER } from './tax-number';
+export { DE_VAT_ID } from './vat-id';

@@ -3,18 +3,9 @@ import {
   COUNTRY_OF,
   ENTITY_NAMES,
   type EntityName,
-} from '../../core/catalog';
-import type { Entity, EntityDefinition } from '../../core/types';
-import {
-  CREDIT_CARD,
-  CRYPTO,
-  DATE_TIME,
-  EMAIL_ADDRESS,
-  IBAN_CODE,
-  IP_ADDRESS,
-  MAC_ADDRESS,
-  UUID,
-} from '../generic/generic';
+} from '../core/catalog';
+import type { Entity, EntityDefinition } from '../core/types';
+import { FI_PERSONAL_IDENTITY_CODE } from './finland';
 import {
   DE_BSNR,
   DE_FUEHRERSCHEIN,
@@ -31,19 +22,25 @@ import {
   DE_VAT_ID,
 } from './germany';
 import {
+  CREDIT_CARD,
+  CRYPTO,
+  DATE_TIME,
+  EMAIL_ADDRESS,
+  IBAN_CODE,
+  IP_ADDRESS,
+  MAC_ADDRESS,
+  UUID,
+} from './global';
+import {
   IT_DRIVER_LICENSE,
   IT_FISCAL_CODE,
   IT_IDENTITY_CARD,
   IT_PASSPORT,
   IT_VAT_CODE,
 } from './italy';
-import {
-  FI_PERSONAL_IDENTITY_CODE,
-  PL_PESEL,
-  SE_ORGANISATIONSNUMMER,
-  SE_PERSONNUMMER,
-} from './nordics';
+import { PL_PESEL } from './poland';
 import { ES_NIE, ES_NIF, ES_PASSPORT } from './spain';
+import { SE_ORGANISATIONSNUMMER, SE_PERSONNUMMER } from './sweden';
 import {
   UK_DRIVING_LICENCE,
   UK_NHS,
@@ -51,7 +48,7 @@ import {
   UK_PASSPORT,
   UK_POSTCODE,
   UK_VEHICLE_REGISTRATION,
-} from './uk';
+} from './united-kingdom';
 
 /**
  * La definicion de cada entidad del catalogo.
@@ -132,10 +129,3 @@ export const REGISTRY: readonly Entity[] = ENTITY_NAMES.map((name) => ({
 export const BY_NAME: Record<EntityName, Entity> = Object.fromEntries(
   REGISTRY.map((entity) => [entity.name, entity]),
 ) as Record<EntityName, Entity>;
-
-export * from '../generic/generic';
-export * from './germany';
-export * from './italy';
-export * from './nordics';
-export * from './spain';
-export * from './uk';

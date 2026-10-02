@@ -1,6 +1,6 @@
 import { escapeRegex, sanitize } from './core/sanitize';
 import type { Detection, Entity, Methods, ScanResult } from './core/types';
-import { REGISTRY } from './entities/countries';
+import { REGISTRY } from './entities';
 
 /** Detections scoring below this are dropped. */
 const MIN_SCORE = 0.4;

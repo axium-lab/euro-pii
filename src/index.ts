@@ -1,6 +1,6 @@
 export { Nerium } from './nerium';
 export { NeriumError, isNeriumError } from './core/errors';
-export { BY_NAME, REGISTRY } from './entities/countries';
+export { BY_NAME, REGISTRY } from './entities';
 export { CATALOG, CATEGORY_OF, COUNTRY_OF, ENTITY_NAMES } from './core/catalog';
 
 export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
