@@ -11,6 +11,7 @@ export const IT_IDENTITY_CARD = defineEntity({
   name: 'IT_IDENTITY_CARD',
   country: 'IT',
   kind: 'NATIONAL_ID',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'Italian identity card number',

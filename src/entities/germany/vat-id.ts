@@ -6,6 +6,7 @@ export const DE_VAT_ID = defineEntity({
   name: 'DE_VAT_ID',
   country: 'DE',
   kind: 'VAT_ID',
+  dataClass: 'CORPORATE',
 
   // ── Detection ───────────────────────────────
   description: 'German VAT identification number',

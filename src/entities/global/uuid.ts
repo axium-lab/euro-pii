@@ -5,6 +5,7 @@ export const UUID = defineEntity({
   name: 'UUID',
   country: 'GLOBAL',
   kind: 'UUID',
+  dataClass: 'TECHNICAL',
 
   // ── Detection ───────────────────────────────
   description: 'RFC 4122 universally unique identifier',

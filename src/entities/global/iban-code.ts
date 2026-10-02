@@ -6,6 +6,7 @@ export const IBAN_CODE = defineEntity({
   name: 'IBAN_CODE',
   country: 'GLOBAL',
   kind: 'BANK_ACCOUNT',
+  dataClass: 'FINANCIAL',
 
   // ── Detection ───────────────────────────────
   description: 'International bank account number',

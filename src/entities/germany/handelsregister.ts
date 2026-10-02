@@ -5,6 +5,7 @@ export const DE_HANDELSREGISTER = defineEntity({
   name: 'DE_HANDELSREGISTER',
   country: 'DE',
   kind: 'COMPANY_ID',
+  dataClass: 'CORPORATE',
 
   // ── Detection ───────────────────────────────
   description: 'German commercial register number',

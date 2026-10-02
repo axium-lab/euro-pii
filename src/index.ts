@@ -10,6 +10,7 @@ export {
 export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
 export type {
   Country,
+  DataClass,
   Detection,
   Entity,
   EntityDefinition,

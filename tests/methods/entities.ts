@@ -17,6 +17,18 @@ console.log(
   JSON.stringify(Object.fromEntries([...byKind].sort()), null, 2),
 );
 
+console.log('\n── grouped by dataClass');
+const byDataClass = new Map<string, string[]>();
+for (const entity of REGISTRY) {
+  byDataClass.set(entity.dataClass, [
+    ...(byDataClass.get(entity.dataClass) ?? []),
+    entity.name,
+  ]);
+}
+console.log(
+  JSON.stringify(Object.fromEntries([...byDataClass].sort()), null, 2),
+);
+
 console.log('\n── counts');
 console.log(
   JSON.stringify(

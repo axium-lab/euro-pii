@@ -6,6 +6,7 @@ export const CREDIT_CARD = defineEntity({
   name: 'CREDIT_CARD',
   country: 'GLOBAL',
   kind: 'PAYMENT_CARD',
+  dataClass: 'FINANCIAL',
 
   // ── Detection ───────────────────────────────
   description: 'Payment card number',

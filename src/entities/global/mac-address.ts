@@ -13,6 +13,7 @@ export const MAC_ADDRESS = defineEntity({
   name: 'MAC_ADDRESS',
   country: 'GLOBAL',
   kind: 'MAC_ADDRESS',
+  dataClass: 'TECHNICAL',
 
   // ── Detection ───────────────────────────────
   description: 'Hardware MAC address',

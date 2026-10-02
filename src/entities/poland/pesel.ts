@@ -6,6 +6,7 @@ export const PL_PESEL = defineEntity({
   name: 'PL_PESEL',
   country: 'PL',
   kind: 'NATIONAL_ID',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'Polish national identification number',

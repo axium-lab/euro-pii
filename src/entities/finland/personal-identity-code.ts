@@ -9,6 +9,7 @@ export const FI_PERSONAL_IDENTITY_CODE = defineEntity({
   name: 'FI_PERSONAL_IDENTITY_CODE',
   country: 'FI',
   kind: 'NATIONAL_ID',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'Finnish personal identity code',

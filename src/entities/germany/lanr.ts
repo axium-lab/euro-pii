@@ -6,6 +6,7 @@ export const DE_LANR = defineEntity({
   name: 'DE_LANR',
   country: 'DE',
   kind: 'HEALTH_ID',
+  dataClass: 'HEALTH',
 
   // ── Detection ───────────────────────────────
   description: 'German physician number',

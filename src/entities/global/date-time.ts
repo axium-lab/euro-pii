@@ -10,6 +10,7 @@ export const DATE_TIME = defineEntity({
   name: 'DATE_TIME',
   country: 'GLOBAL',
   kind: 'DATE',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'Date or timestamp',

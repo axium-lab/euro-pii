@@ -24,6 +24,27 @@ export type Kind =
   | 'VAT_ID'
   | 'VEHICLE_PLATE';
 
+/**
+ * What sort of sensitive data an entity is, which is what most handling rules
+ * hinge on.
+ *
+ * - `PERSONAL`: identifies or describes a natural person. The GDPR default.
+ * - `FINANCIAL`: payment means and accounts (PCI DSS, fraud).
+ * - `HEALTH`: health-related data, a GDPR art. 9 special category.
+ * - `TECHNICAL`: identifies a machine or a system rather than a person.
+ * - `CORPORATE`: identifies a company. Usually not personal data at all.
+ *
+ * When an entity could be either, it takes the more protective class: an
+ * email address can be `info@company.com`, but the regex cannot tell it from a
+ * person's, so it is `PERSONAL`.
+ */
+export type DataClass =
+  | 'PERSONAL'
+  | 'FINANCIAL'
+  | 'HEALTH'
+  | 'TECHNICAL'
+  | 'CORPORATE';
+
 /** Who issues the entity. `GLOBAL` holds the ones no state issues. */
 export type Country =
   | 'GLOBAL'
@@ -53,13 +74,14 @@ export interface Pattern {
  * An entity as its own file declares it.
  *
  * `name` is a plain `string` here because `EntityName` is derived FROM these
- * definitions: each file declares it `as const satisfies EntityDefinition`,
- * which keeps the literal and checks everything else.
+ * definitions: each file declares its entity through `defineEntity`, which
+ * keeps that literal and checks everything else.
  */
 export interface EntityDefinition {
   name: string;
   country: Country;
   kind: Kind;
+  dataClass: DataClass;
   description: string;
   patterns: readonly Pattern[];
   /**
@@ -85,6 +107,7 @@ export interface Entity extends EntityDefinition {
 export interface Detection {
   entity: EntityName;
   kind: Kind;
+  dataClass: DataClass;
   country: Country;
   /** Offset into the ORIGINAL text, never into the anonymized one. */
   start: number;

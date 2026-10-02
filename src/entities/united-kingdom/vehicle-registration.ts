@@ -16,6 +16,7 @@ export const GB_VEHICLE_REGISTRATION = defineEntity({
   name: 'GB_VEHICLE_REGISTRATION',
   country: 'GB',
   kind: 'VEHICLE_PLATE',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'UK vehicle registration plate',

@@ -5,6 +5,7 @@ export const GB_PASSPORT = defineEntity({
   name: 'GB_PASSPORT',
   country: 'GB',
   kind: 'PASSPORT',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'UK passport number',

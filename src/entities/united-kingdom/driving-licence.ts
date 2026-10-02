@@ -16,6 +16,7 @@ export const GB_DRIVING_LICENCE = defineEntity({
   name: 'GB_DRIVING_LICENCE',
   country: 'GB',
   kind: 'DRIVER_LICENCE',
+  dataClass: 'PERSONAL',
 
   // ── Detection ───────────────────────────────
   description: 'UK driving licence number',

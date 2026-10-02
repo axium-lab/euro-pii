@@ -5,6 +5,7 @@ export const DE_HEALTH_INSURANCE = defineEntity({
   name: 'DE_HEALTH_INSURANCE',
   country: 'DE',
   kind: 'HEALTH_ID',
+  dataClass: 'HEALTH',
 
   // ── Detection ───────────────────────────────
   description: 'German health insurance number',

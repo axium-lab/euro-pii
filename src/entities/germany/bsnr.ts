@@ -13,6 +13,7 @@ export const DE_BSNR = defineEntity({
   name: 'DE_BSNR',
   country: 'DE',
   kind: 'HEALTH_ID',
+  dataClass: 'HEALTH',
 
   // ── Detection ───────────────────────────────
   description: 'German medical practice number',
