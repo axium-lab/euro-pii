@@ -11,11 +11,11 @@ const drivingLicenceCheck = (value: string): Validation => {
   return null;
 };
 
-export const UK_DRIVING_LICENCE = defineEntity({
+export const GB_DRIVING_LICENCE = defineEntity({
   // ── Classification ──────────────────────────
-  name: 'UK_DRIVING_LICENCE',
+  name: 'GB_DRIVING_LICENCE',
   country: 'GB',
-  category: 'DRIVER_LICENCE',
+  kind: 'DRIVER_LICENCE',
 
   // ── Detection ───────────────────────────────
   description: 'UK driving licence number',

@@ -68,7 +68,7 @@ function detect(text: string): Detection[] {
 
         found.push({
           entity: entity.name,
-          category: entity.category,
+          kind: entity.kind,
           country: entity.country,
           start,
           end: start + value.length,

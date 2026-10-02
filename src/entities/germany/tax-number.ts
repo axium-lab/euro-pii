@@ -4,7 +4,7 @@ export const DE_TAX_NUMBER = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_TAX_NUMBER',
   country: 'DE',
-  category: 'TAX_ID',
+  kind: 'TAX_ID',
 
   // ── Detection ───────────────────────────────
   description: 'German tax number',

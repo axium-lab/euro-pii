@@ -10,7 +10,7 @@
  */
 import { DE_EXPECTED, EXAMPLE_TEXT_ALL_DE_ENTITIES } from './de_document';
 import { ES_EXPECTED, EXAMPLE_TEXT_ALL_ES_ENTITIES } from './es_document';
-import { EU_EXPECTED, EXAMPLE_TEXT_ALL_EU_ENTITIES } from './eu_document';
+import { GLOBAL_EXPECTED, EXAMPLE_TEXT_ALL_GLOBAL_ENTITIES } from './global_document';
 import { FI_EXPECTED, EXAMPLE_TEXT_ALL_FI_ENTITIES } from './fi_document';
 import { GB_EXPECTED, EXAMPLE_TEXT_ALL_GB_ENTITIES } from './gb_document';
 import { IT_EXPECTED, EXAMPLE_TEXT_ALL_IT_ENTITIES } from './it_document';
@@ -19,7 +19,7 @@ import { SE_EXPECTED, EXAMPLE_TEXT_ALL_SE_ENTITIES } from './se_document';
 
 export * from './de_document';
 export * from './es_document';
-export * from './eu_document';
+export * from './global_document';
 export * from './fi_document';
 export * from './gb_document';
 export * from './it_document';
@@ -28,7 +28,7 @@ export * from './se_document';
 
 /** Los ocho documentos con lo que cada uno deberia sacar. */
 export const DOCUMENTS = {
-  EU: { text: EXAMPLE_TEXT_ALL_EU_ENTITIES, expected: EU_EXPECTED },
+  GLOBAL: { text: EXAMPLE_TEXT_ALL_GLOBAL_ENTITIES, expected: GLOBAL_EXPECTED },
   ES: { text: EXAMPLE_TEXT_ALL_ES_ENTITIES, expected: ES_EXPECTED },
   DE: { text: EXAMPLE_TEXT_ALL_DE_ENTITIES, expected: DE_EXPECTED },
   GB: { text: EXAMPLE_TEXT_ALL_GB_ENTITIES, expected: GB_EXPECTED },

@@ -4,8 +4,8 @@ import { defineEntity } from '../../core/entity';
 export const CREDIT_CARD = defineEntity({
   // ── Classification ──────────────────────────
   name: 'CREDIT_CARD',
-  country: 'EU',
-  category: 'PAYMENT_CARD',
+  country: 'GLOBAL',
+  kind: 'PAYMENT_CARD',
 
   // ── Detection ───────────────────────────────
   description: 'Payment card number',

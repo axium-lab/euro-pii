@@ -16,7 +16,7 @@ export const ES_NIE = defineEntity({
   // ── Classification ──────────────────────────
   name: 'ES_NIE',
   country: 'ES',
-  category: 'NATIONAL_ID',
+  kind: 'NATIONAL_ID',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish foreigner identification number',

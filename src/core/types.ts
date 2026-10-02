@@ -3,7 +3,7 @@ import type { EntityName } from '../entities';
 export type { EntityName } from '../entities';
 
 /** What an entity IS, whatever the country that issues it. */
-export type Category =
+export type Kind =
   | 'BANK_ACCOUNT'
   | 'COMPANY_ID'
   | 'CRYPTO'
@@ -24,8 +24,16 @@ export type Category =
   | 'VAT_ID'
   | 'VEHICLE_PLATE';
 
-/** Who issues the entity. `EU` holds the ones no state issues. */
-export type Country = 'EU' | 'ES' | 'DE' | 'GB' | 'IT' | 'SE' | 'FI' | 'PL';
+/** Who issues the entity. `GLOBAL` holds the ones no state issues. */
+export type Country =
+  | 'GLOBAL'
+  | 'ES'
+  | 'DE'
+  | 'GB'
+  | 'IT'
+  | 'SE'
+  | 'FI'
+  | 'PL';
 
 /** `true` = confirmed · `false` = rejected · `null` = cannot be decided. */
 export type Validation = true | false | null;
@@ -51,7 +59,7 @@ export interface Pattern {
 export interface EntityDefinition {
   name: string;
   country: Country;
-  category: Category;
+  kind: Kind;
   description: string;
   patterns: readonly Pattern[];
   /**
@@ -76,7 +84,7 @@ export interface Entity extends EntityDefinition {
 
 export interface Detection {
   entity: EntityName;
-  category: Category;
+  kind: Kind;
   country: Country;
   /** Offset into the ORIGINAL text, never into the anonymized one. */
   start: number;

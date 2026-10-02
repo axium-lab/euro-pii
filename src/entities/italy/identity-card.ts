@@ -1,7 +1,7 @@
 import { defineEntity } from '../../core/entity';
 
 /**
- * Collides with IT_PASSPORT and UK_PASSPORT: the paper card, the Italian
+ * Collides with IT_PASSPORT and GB_PASSPORT: the paper card, the Italian
  * passport and the British one all match `[A-Z]{2}\d{7}`, and none of the three
  * has a validation to tell them apart. Enable all of them and `AB1234567`
  * yields three detections — the overlap layer picks one, arbitrarily.
@@ -10,7 +10,7 @@ export const IT_IDENTITY_CARD = defineEntity({
   // ── Classification ──────────────────────────
   name: 'IT_IDENTITY_CARD',
   country: 'IT',
-  category: 'NATIONAL_ID',
+  kind: 'NATIONAL_ID',
 
   // ── Detection ───────────────────────────────
   description: 'Italian identity card number',

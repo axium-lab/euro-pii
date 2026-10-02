@@ -5,8 +5,8 @@ const OCTET = String.raw`(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`;
 export const IP_ADDRESS = defineEntity({
   // ── Classification ──────────────────────────
   name: 'IP_ADDRESS',
-  country: 'EU',
-  category: 'IP_ADDRESS',
+  country: 'GLOBAL',
+  kind: 'IP_ADDRESS',
 
   // ── Detection ───────────────────────────────
   description: 'IP address',

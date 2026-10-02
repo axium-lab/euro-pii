@@ -11,7 +11,7 @@ import { UUID } from './uuid';
 /**
  * Entities no state issues, in registry order.
  *
- * The `satisfies` rejects an entity that declares a country other than `EU`.
+ * The `satisfies` rejects an entity that declares a country other than `GLOBAL`.
  */
 export const GLOBAL = [
   CREDIT_CARD,
@@ -22,4 +22,4 @@ export const GLOBAL = [
   IP_ADDRESS,
   MAC_ADDRESS,
   UUID,
-] as const satisfies readonly (EntityDefinition & { country: 'EU' })[];
+] as const satisfies readonly (EntityDefinition & { country: 'GLOBAL' })[];

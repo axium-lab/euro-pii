@@ -8,8 +8,8 @@ const YEAR = String.raw`(\d{4}|\d{2})`;
 export const DATE_TIME = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DATE_TIME',
-  country: 'EU',
-  category: 'DATE',
+  country: 'GLOBAL',
+  kind: 'DATE',
 
   // ── Detection ───────────────────────────────
   description: 'Date or timestamp',

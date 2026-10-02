@@ -3,8 +3,8 @@ import { defineEntity } from '../../core/entity';
 export const UUID = defineEntity({
   // ── Classification ──────────────────────────
   name: 'UUID',
-  country: 'EU',
-  category: 'UUID',
+  country: 'GLOBAL',
+  kind: 'UUID',
 
   // ── Detection ───────────────────────────────
   description: 'RFC 4122 universally unique identifier',

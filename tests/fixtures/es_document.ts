@@ -63,7 +63,7 @@ y DNI aleman L01X00T47
 `;
 
 export const ES_EXPECTED = [
-  // Global / EU
+  // Global
   'CREDIT_CARD',
   'CRYPTO',
   'DATE_TIME',

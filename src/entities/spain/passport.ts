@@ -9,7 +9,7 @@ export const ES_PASSPORT = defineEntity({
   // ── Classification ──────────────────────────
   name: 'ES_PASSPORT',
   country: 'ES',
-  category: 'PASSPORT',
+  kind: 'PASSPORT',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish passport number',

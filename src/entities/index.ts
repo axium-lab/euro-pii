@@ -1,4 +1,4 @@
-import type { Category, Country, Entity } from '../core/types';
+import type { Country, Entity } from '../core/types';
 import { FINLAND } from './finland';
 import { GERMANY } from './germany';
 import { GLOBAL } from './global';
@@ -13,7 +13,7 @@ import { UNITED_KINGDOM } from './united-kingdom';
  * in the order of its own `index.ts`.
  *
  * This list IS the catalog. Each entity file declares its name, country and
- * category, and everything else is derived from here, so adding an entity is
+ * kind, and everything else is derived from here, so adding an entity is
  * two steps: create its file and list it in the `index.ts` of its country.
  *
  * European scope: the multi-country entities plus Spain, Germany, the United
@@ -60,7 +60,7 @@ const namesOf = (country: Country): readonly EntityName[] =>
  * country added to `Country` without listing it here does not compile.
  */
 export const CATALOG: Record<Country, readonly EntityName[]> = {
-  EU: namesOf('EU'),
+  GLOBAL: namesOf('GLOBAL'),
   ES: namesOf('ES'),
   DE: namesOf('DE'),
   GB: namesOf('GB'),
@@ -69,11 +69,3 @@ export const CATALOG: Record<Country, readonly EntityName[]> = {
   FI: namesOf('FI'),
   PL: namesOf('PL'),
 };
-
-export const CATEGORY_OF = Object.fromEntries(
-  REGISTRY.map((entity) => [entity.name, entity.category]),
-) as Record<EntityName, Category>;
-
-export const COUNTRY_OF = Object.fromEntries(
-  REGISTRY.map((entity) => [entity.name, entity.country]),
-) as Record<EntityName, Country>;

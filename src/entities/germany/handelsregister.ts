@@ -4,7 +4,7 @@ export const DE_HANDELSREGISTER = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_HANDELSREGISTER',
   country: 'DE',
-  category: 'COMPANY_ID',
+  kind: 'COMPANY_ID',
 
   // ── Detection ───────────────────────────────
   description: 'German commercial register number',

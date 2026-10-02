@@ -5,7 +5,7 @@ export const DE_ID_CARD = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_ID_CARD',
   country: 'DE',
-  category: 'NATIONAL_ID',
+  kind: 'NATIONAL_ID',
 
   // ── Detection ───────────────────────────────
   description: 'German identity card number',

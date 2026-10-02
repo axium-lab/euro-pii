@@ -5,7 +5,7 @@ export const DE_SOCIAL_SECURITY = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_SOCIAL_SECURITY',
   country: 'DE',
-  category: 'SOCIAL_SECURITY',
+  kind: 'SOCIAL_SECURITY',
 
   // ── Detection ───────────────────────────────
   description: 'German social security number',

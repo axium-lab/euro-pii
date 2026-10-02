@@ -1,10 +1,10 @@
 import { defineEntity } from '../../core/entity';
 
-export const UK_PASSPORT = defineEntity({
+export const GB_PASSPORT = defineEntity({
   // ── Classification ──────────────────────────
-  name: 'UK_PASSPORT',
+  name: 'GB_PASSPORT',
   country: 'GB',
-  category: 'PASSPORT',
+  kind: 'PASSPORT',
 
   // ── Detection ───────────────────────────────
   description: 'UK passport number',

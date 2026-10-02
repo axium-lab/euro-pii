@@ -5,16 +5,16 @@ import { Nerium, REGISTRY } from '../../src/index';
 console.log('\n── full registry');
 console.log(JSON.stringify(new Nerium().supported_entities(), null, 2));
 
-console.log('\n── grouped by category');
-const byCategory = new Map<string, string[]>();
+console.log('\n── grouped by kind');
+const byKind = new Map<string, string[]>();
 for (const entity of REGISTRY) {
-  byCategory.set(entity.category, [
-    ...(byCategory.get(entity.category) ?? []),
+  byKind.set(entity.kind, [
+    ...(byKind.get(entity.kind) ?? []),
     `${entity.name}(${entity.country})`,
   ]);
 }
 console.log(
-  JSON.stringify(Object.fromEntries([...byCategory].sort()), null, 2),
+  JSON.stringify(Object.fromEntries([...byKind].sort()), null, 2),
 );
 
 console.log('\n── counts');

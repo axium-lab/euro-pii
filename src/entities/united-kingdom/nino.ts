@@ -6,11 +6,11 @@ import { defineEntity } from '../../core/entity';
  * negative lookahead drops the forbidden prefixes, each letter class excludes
  * the letters that position never takes, and the suffix can only be A-D.
  */
-export const UK_NINO = defineEntity({
+export const GB_NINO = defineEntity({
   // ── Classification ──────────────────────────
-  name: 'UK_NINO',
+  name: 'GB_NINO',
   country: 'GB',
-  category: 'SOCIAL_SECURITY',
+  kind: 'SOCIAL_SECURITY',
 
   // ── Detection ───────────────────────────────
   description: 'UK National Insurance number',
@@ -19,7 +19,7 @@ export const UK_NINO = defineEntity({
       name: 'nino',
       // The source pattern opens with an optional space after the `\b`, which
       // pulls the preceding space INTO the match: masking `NINO AB123456C` then
-      // produces `NINO<UK_NINO_1>`. Dropped here, the internal ones stay so
+      // produces `NINO<GB_NINO_1>`. Dropped here, the internal ones stay so
       // `AB 12 34 56 C` still matches.
       regex: String.raw`\b(?!bg|gb|nk|kn|nt|tn|zz|BG|GB|NK|KN|NT|TN|ZZ)([a-ceghj-pr-tw-zA-CEGHJ-PR-TW-Z]{1}[a-ceghj-npr-tw-zA-CEGHJ-NPR-TW-Z]{1}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([a-dA-D]{1})\b`,
       score: 0.5,

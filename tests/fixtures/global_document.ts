@@ -1,11 +1,11 @@
 /**
- * Entidades multipais (country: 'EU'): las 8 que no son de ningun estado.
+ * Entidades multipais (country: 'GLOBAL'): las 8 que no son de ningun estado.
  *
  * Todos los valores estan VERIFICADOS contra su checksum, no inventados:
  * la tarjeta pasa Luhn, el IBAN pasa el modulo 97 y la direccion de bitcoin es
  * la del bloque genesis.
  */
-export const EXAMPLE_TEXT_ALL_EU_ENTITIES = `Justificante de operacion
+export const EXAMPLE_TEXT_ALL_GLOBAL_ENTITIES = `Justificante de operacion
 
 Emitido el 2026-04-03T10:15:00Z desde el servidor de facturacion.
 
@@ -19,7 +19,7 @@ Traza tecnica: la peticion entro desde la ip 192.168.1.10, equipo con mac
 00:1B:44:11:3A:B7, y quedo registrada con el uuid
 123e4567-e89b-12d3-a456-426614174000.`;
 
-export const EU_EXPECTED = [
+export const GLOBAL_EXPECTED = [
   'CREDIT_CARD',
   'CRYPTO',
   'DATE_TIME',

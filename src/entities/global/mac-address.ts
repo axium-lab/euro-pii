@@ -11,8 +11,8 @@ const macCheck = (value: string): Validation => {
 export const MAC_ADDRESS = defineEntity({
   // ── Classification ──────────────────────────
   name: 'MAC_ADDRESS',
-  country: 'EU',
-  category: 'MAC_ADDRESS',
+  country: 'GLOBAL',
+  kind: 'MAC_ADDRESS',
 
   // ── Detection ───────────────────────────────
   description: 'Hardware MAC address',

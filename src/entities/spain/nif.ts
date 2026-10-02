@@ -5,7 +5,7 @@ export const ES_NIF = defineEntity({
   // ── Classification ──────────────────────────
   name: 'ES_NIF',
   country: 'ES',
-  category: 'TAX_ID',
+  kind: 'TAX_ID',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish tax identification number',

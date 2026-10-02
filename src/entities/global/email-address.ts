@@ -3,8 +3,8 @@ import { defineEntity } from '../../core/entity';
 export const EMAIL_ADDRESS = defineEntity({
   // ── Classification ──────────────────────────
   name: 'EMAIL_ADDRESS',
-  country: 'EU',
-  category: 'EMAIL',
+  country: 'GLOBAL',
+  kind: 'EMAIL',
 
   // ── Detection ───────────────────────────────
   description: 'Email address',

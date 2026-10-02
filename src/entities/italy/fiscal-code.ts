@@ -12,7 +12,7 @@ export const IT_FISCAL_CODE = defineEntity({
   // ── Classification ──────────────────────────
   name: 'IT_FISCAL_CODE',
   country: 'IT',
-  category: 'TAX_ID',
+  kind: 'TAX_ID',
 
   // ── Detection ───────────────────────────────
   description: 'Italian fiscal code',

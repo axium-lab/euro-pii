@@ -5,7 +5,7 @@ export const DE_PASSPORT = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_PASSPORT',
   country: 'DE',
-  category: 'PASSPORT',
+  kind: 'PASSPORT',
 
   // ── Detection ───────────────────────────────
   description: 'German passport number',

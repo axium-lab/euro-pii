@@ -4,7 +4,7 @@ export const DE_PLZ = defineEntity({
   // ── Classification ──────────────────────────
   name: 'DE_PLZ',
   country: 'DE',
-  category: 'POSTAL_CODE',
+  kind: 'POSTAL_CODE',
 
   // ── Detection ───────────────────────────────
   description: 'German postal code',

@@ -4,8 +4,8 @@ import { ibanValid } from './checksums';
 export const IBAN_CODE = defineEntity({
   // ── Classification ──────────────────────────
   name: 'IBAN_CODE',
-  country: 'EU',
-  category: 'BANK_ACCOUNT',
+  country: 'GLOBAL',
+  kind: 'BANK_ACCOUNT',
 
   // ── Detection ───────────────────────────────
   description: 'International bank account number',

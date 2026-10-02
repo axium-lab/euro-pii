@@ -11,11 +11,11 @@ const vehicleAgeCheck = (value: string): Validation => {
   return (age >= 2 && age <= 29) || (age >= 51 && age <= 79) ? true : false;
 };
 
-export const UK_VEHICLE_REGISTRATION = defineEntity({
+export const GB_VEHICLE_REGISTRATION = defineEntity({
   // ── Classification ──────────────────────────
-  name: 'UK_VEHICLE_REGISTRATION',
+  name: 'GB_VEHICLE_REGISTRATION',
   country: 'GB',
-  category: 'VEHICLE_PLATE',
+  kind: 'VEHICLE_PLATE',
 
   // ── Detection ───────────────────────────────
   description: 'UK vehicle registration plate',

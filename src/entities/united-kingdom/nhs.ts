@@ -1,11 +1,11 @@
 import { defineEntity } from '../../core/entity';
 import { nhsValid } from './checksums';
 
-export const UK_NHS = defineEntity({
+export const GB_NHS = defineEntity({
   // ── Classification ──────────────────────────
-  name: 'UK_NHS',
+  name: 'GB_NHS',
   country: 'GB',
-  category: 'HEALTH_ID',
+  kind: 'HEALTH_ID',
 
   // ── Detection ───────────────────────────────
   description: 'UK National Health Service number',

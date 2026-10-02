@@ -4,8 +4,8 @@ import { base58CheckValid } from './checksums';
 export const CRYPTO = defineEntity({
   // ── Classification ──────────────────────────
   name: 'CRYPTO',
-  country: 'EU',
-  category: 'CRYPTO',
+  country: 'GLOBAL',
+  kind: 'CRYPTO',
 
   // ── Detection ───────────────────────────────
   description: 'Bitcoin wallet address',
