@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const EMAIL_ADDRESS: EntityDefinition = {
+export const EMAIL_ADDRESS = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'EMAIL_ADDRESS',
+  country: 'EU',
+  category: 'EMAIL',
+
+  // ── Detection ───────────────────────────────
   description: 'Email address',
   patterns: [
     {
@@ -22,4 +27,4 @@ export const EMAIL_ADDRESS: EntityDefinition = {
     },
   },
   context: ['email', 'correo', 'e-mail', 'mail'],
-};
+});

@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const UUID: EntityDefinition = {
+export const UUID = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UUID',
+  country: 'EU',
+  category: 'UUID',
+
+  // ── Detection ───────────────────────────────
   description: 'RFC 4122 universally unique identifier',
   patterns: [
     {
@@ -23,4 +28,4 @@ export const UUID: EntityDefinition = {
     },
   },
   context: ['uuid', 'guid', 'identifier'],
-};
+});

@@ -1,12 +1,17 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 const MONTHS = 'JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC';
 const DAY = String.raw`([1-9]|0[1-9]|[1-2][0-9]|3[0-1])`;
 const MONTH = String.raw`([1-9]|0[1-9]|1[0-2])`;
 const YEAR = String.raw`(\d{4}|\d{2})`;
 
-export const DATE_TIME: EntityDefinition = {
+export const DATE_TIME = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DATE_TIME',
+  country: 'EU',
+  category: 'DATE',
+
+  // ── Detection ───────────────────────────────
   description: 'Date or timestamp',
   patterns: [
     {
@@ -69,4 +74,4 @@ export const DATE_TIME: EntityDefinition = {
     { name: 'mm/yy', regex: String.raw`\b(${MONTH}/\d{2})\b`, score: 0.1 },
   ],
   context: ['date', 'fecha', 'nacimiento', 'birth', 'expira', 'caducidad'],
-};
+});

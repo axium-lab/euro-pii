@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { deSocialSecurityValid } from './checksums';
 
-export const DE_SOCIAL_SECURITY: EntityDefinition = {
+export const DE_SOCIAL_SECURITY = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_SOCIAL_SECURITY',
+  country: 'DE',
+  category: 'SOCIAL_SECURITY',
+
+  // ── Detection ───────────────────────────────
   description: 'German social security number',
   patterns: [
     {
@@ -21,4 +26,4 @@ export const DE_SOCIAL_SECURITY: EntityDefinition = {
     run: (value) => deSocialSecurityValid(value),
   },
   context: ['sozialversicherung', 'rentenversicherung', 'versicherungsnummer'],
-};
+});

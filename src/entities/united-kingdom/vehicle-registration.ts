@@ -1,4 +1,5 @@
-import type { EntityDefinition, Validation } from '../../core/types';
+import { defineEntity } from '../../core/entity';
+import type { Validation } from '../../core/types';
 
 /** Current format only: the age identifier must be 02-29 or 51-79. */
 const vehicleAgeCheck = (value: string): Validation => {
@@ -10,8 +11,13 @@ const vehicleAgeCheck = (value: string): Validation => {
   return (age >= 2 && age <= 29) || (age >= 51 && age <= 79) ? true : false;
 };
 
-export const UK_VEHICLE_REGISTRATION: EntityDefinition = {
+export const UK_VEHICLE_REGISTRATION = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UK_VEHICLE_REGISTRATION',
+  country: 'GB',
+  category: 'VEHICLE_PLATE',
+
+  // ── Detection ───────────────────────────────
   description: 'UK vehicle registration plate',
   patterns: [
     {
@@ -32,4 +38,4 @@ export const UK_VEHICLE_REGISTRATION: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: vehicleAgeCheck },
   context: ['registration', 'number plate', 'vehicle', 'matrícula'],
-};
+});

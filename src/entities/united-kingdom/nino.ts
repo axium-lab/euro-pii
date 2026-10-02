@@ -1,4 +1,4 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 /**
  * The best built pattern of the whole reference: the entire specification lives
@@ -6,8 +6,13 @@ import type { EntityDefinition } from '../../core/types';
  * negative lookahead drops the forbidden prefixes, each letter class excludes
  * the letters that position never takes, and the suffix can only be A-D.
  */
-export const UK_NINO: EntityDefinition = {
+export const UK_NINO = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UK_NINO',
+  country: 'GB',
+  category: 'SOCIAL_SECURITY',
+
+  // ── Detection ───────────────────────────────
   description: 'UK National Insurance number',
   patterns: [
     {
@@ -21,4 +26,4 @@ export const UK_NINO: EntityDefinition = {
     },
   ],
   context: ['national insurance', 'nino', 'ni number'],
-};
+});

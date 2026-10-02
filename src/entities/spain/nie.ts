@@ -1,4 +1,4 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { nieValid } from './checksums';
 
 /**
@@ -12,8 +12,13 @@ import { nieValid } from './checksums';
  * the prefix removes the collision at the source instead of leaving an
  * arbitrary tie-break to decide the label.
  */
-export const ES_NIE: EntityDefinition = {
+export const ES_NIE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'ES_NIE',
+  country: 'ES',
+  category: 'NATIONAL_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'Spanish foreigner identification number',
   patterns: [
     {
@@ -24,4 +29,4 @@ export const ES_NIE: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: nieValid },
   context: ['nie', 'número de identidad de extranjero', 'identificación'],
-};
+});

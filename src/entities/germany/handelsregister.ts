@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_HANDELSREGISTER: EntityDefinition = {
+export const DE_HANDELSREGISTER = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_HANDELSREGISTER',
+  country: 'DE',
+  category: 'COMPANY_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German commercial register number',
   patterns: [
     {
@@ -11,4 +16,4 @@ export const DE_HANDELSREGISTER: EntityDefinition = {
     },
   ],
   context: ['handelsregister', 'amtsgericht', 'hrb', 'hra'],
-};
+});

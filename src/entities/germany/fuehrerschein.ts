@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_FUEHRERSCHEIN: EntityDefinition = {
+export const DE_FUEHRERSCHEIN = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_FUEHRERSCHEIN',
+  country: 'DE',
+  category: 'DRIVER_LICENCE',
+
+  // ── Detection ───────────────────────────────
   description: 'German driving licence number',
   patterns: [
     {
@@ -11,4 +16,4 @@ export const DE_FUEHRERSCHEIN: EntityDefinition = {
     },
   ],
   context: ['führerschein', 'fuehrerschein', 'driving licence'],
-};
+});

@@ -1,4 +1,5 @@
-import type { EntityDefinition, Validation } from '../../core/types';
+import { defineEntity } from '../../core/entity';
+import type { Validation } from '../../core/types';
 
 /** The DVLA check digit is not public, so this can only reject. Never true. */
 const drivingLicenceCheck = (value: string): Validation => {
@@ -10,8 +11,13 @@ const drivingLicenceCheck = (value: string): Validation => {
   return null;
 };
 
-export const UK_DRIVING_LICENCE: EntityDefinition = {
+export const UK_DRIVING_LICENCE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UK_DRIVING_LICENCE',
+  country: 'GB',
+  category: 'DRIVER_LICENCE',
+
+  // ── Detection ───────────────────────────────
   description: 'UK driving licence number',
   patterns: [
     {
@@ -23,4 +29,4 @@ export const UK_DRIVING_LICENCE: EntityDefinition = {
   ],
   validation: { kind: 'filter', run: drivingLicenceCheck },
   context: ['driving licence', 'dvla', 'driver licence'],
-};
+});

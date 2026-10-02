@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { peselValid } from './checksums';
 
-export const PL_PESEL: EntityDefinition = {
+export const PL_PESEL = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'PL_PESEL',
+  country: 'PL',
+  category: 'NATIONAL_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'Polish national identification number',
   patterns: [
     {
@@ -15,4 +20,4 @@ export const PL_PESEL: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: (value) => peselValid(value) },
   context: ['pesel', 'numer pesel'],
-};
+});

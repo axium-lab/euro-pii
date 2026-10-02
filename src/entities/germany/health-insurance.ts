@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_HEALTH_INSURANCE: EntityDefinition = {
+export const DE_HEALTH_INSURANCE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_HEALTH_INSURANCE',
+  country: 'DE',
+  category: 'HEALTH_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German health insurance number',
   patterns: [
     { name: 'kvnr', regex: String.raw`\b[A-Z][0-9]{9}\b`, score: 0.3 },
@@ -16,4 +21,4 @@ export const DE_HEALTH_INSURANCE: EntityDefinition = {
         : false,
   },
   context: ['krankenversicherung', 'versichertennummer', 'kvnr'],
-};
+});

@@ -1,8 +1,13 @@
 import { luhnValid } from '../../core/checksums';
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const CREDIT_CARD: EntityDefinition = {
+export const CREDIT_CARD = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'CREDIT_CARD',
+  country: 'EU',
+  category: 'PAYMENT_CARD',
+
+  // ── Detection ───────────────────────────────
   description: 'Payment card number',
   patterns: [
     {
@@ -13,4 +18,4 @@ export const CREDIT_CARD: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: (value) => luhnValid(value) },
   context: ['credit card', 'visa', 'mastercard', 'amex', 'tarjeta', 'cvv'],
-};
+});

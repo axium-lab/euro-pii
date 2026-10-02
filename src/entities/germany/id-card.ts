@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { ICAO_PATTERN, icaoValidation } from './icao';
 
-export const DE_ID_CARD: EntityDefinition = {
+export const DE_ID_CARD = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_ID_CARD',
+  country: 'DE',
+  category: 'NATIONAL_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German identity card number',
   patterns: [
     { name: 'icao', regex: ICAO_PATTERN, score: 0.4 },
@@ -11,4 +16,4 @@ export const DE_ID_CARD: EntityDefinition = {
   ],
   validation: icaoValidation,
   context: ['personalausweis', 'ausweisnummer', 'identity card'],
-};
+});

@@ -1,9 +1,14 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 const OCTET = String.raw`(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`;
 
-export const IP_ADDRESS: EntityDefinition = {
+export const IP_ADDRESS = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'IP_ADDRESS',
+  country: 'EU',
+  category: 'IP_ADDRESS',
+
+  // ── Detection ───────────────────────────────
   description: 'IP address',
   patterns: [
     {
@@ -21,4 +26,4 @@ export const IP_ADDRESS: EntityDefinition = {
     },
   ],
   context: ['ip', 'address', 'host', 'servidor', 'direccion'],
-};
+});

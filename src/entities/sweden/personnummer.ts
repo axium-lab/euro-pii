@@ -1,4 +1,4 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { personnummerValid } from './checksums';
 
 /**
@@ -9,8 +9,13 @@ import { personnummerValid } from './checksums';
  */
 const SE_PERSON_PATTERN = String.raw`([0-9]{6,8})([-+]?)[0-9]{4}`;
 
-export const SE_PERSONNUMMER: EntityDefinition = {
+export const SE_PERSONNUMMER = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'SE_PERSONNUMMER',
+  country: 'SE',
+  category: 'NATIONAL_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'Swedish personal identity number',
   patterns: [
     {
@@ -25,4 +30,4 @@ export const SE_PERSONNUMMER: EntityDefinition = {
     run: (_value, raw) => personnummerValid(raw),
   },
   context: ['personnummer', 'personal identity number'],
-};
+});

@@ -1,8 +1,13 @@
 import { weightedMod10 } from '../../core/checksums';
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_LANR: EntityDefinition = {
+export const DE_LANR = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_LANR',
+  country: 'DE',
+  category: 'HEALTH_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German physician number',
   patterns: [{ name: 'lanr', regex: String.raw`\b[0-9]{9}\b`, score: 0.3 }],
   validation: {
@@ -10,4 +15,4 @@ export const DE_LANR: EntityDefinition = {
     run: (value) => weightedMod10(value, [4, 9, 4, 9, 4, 9], 6),
   },
   context: ['lanr', 'lebenslange arztnummer', 'arzt'],
-};
+});

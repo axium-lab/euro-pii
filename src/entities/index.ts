@@ -1,131 +1,79 @@
-import {
-  CATEGORY_OF,
-  COUNTRY_OF,
-  ENTITY_NAMES,
-  type EntityName,
-} from '../core/catalog';
-import type { Entity, EntityDefinition } from '../core/types';
-import { FI_PERSONAL_IDENTITY_CODE } from './finland';
-import {
-  DE_BSNR,
-  DE_FUEHRERSCHEIN,
-  DE_HANDELSREGISTER,
-  DE_HEALTH_INSURANCE,
-  DE_ID_CARD,
-  DE_KFZ,
-  DE_LANR,
-  DE_PASSPORT,
-  DE_PLZ,
-  DE_SOCIAL_SECURITY,
-  DE_TAX_ID,
-  DE_TAX_NUMBER,
-  DE_VAT_ID,
-} from './germany';
-import {
-  CREDIT_CARD,
-  CRYPTO,
-  DATE_TIME,
-  EMAIL_ADDRESS,
-  IBAN_CODE,
-  IP_ADDRESS,
-  MAC_ADDRESS,
-  UUID,
-} from './global';
-import {
-  IT_DRIVER_LICENSE,
-  IT_FISCAL_CODE,
-  IT_IDENTITY_CARD,
-  IT_PASSPORT,
-  IT_VAT_CODE,
-} from './italy';
-import { PL_PESEL } from './poland';
-import { ES_NIE, ES_NIF, ES_PASSPORT } from './spain';
-import { SE_ORGANISATIONSNUMMER, SE_PERSONNUMMER } from './sweden';
-import {
-  UK_DRIVING_LICENCE,
-  UK_NHS,
-  UK_NINO,
-  UK_PASSPORT,
-  UK_POSTCODE,
-  UK_VEHICLE_REGISTRATION,
-} from './united-kingdom';
+import type { Category, Country, Entity } from '../core/types';
+import { FINLAND } from './finland';
+import { GERMANY } from './germany';
+import { GLOBAL } from './global';
+import { ITALY } from './italy';
+import { POLAND } from './poland';
+import { SPAIN } from './spain';
+import { SWEDEN } from './sweden';
+import { UNITED_KINGDOM } from './united-kingdom';
 
 /**
- * La definicion de cada entidad del catalogo.
+ * Every entity, in registry order: the countries in this order, and each one
+ * in the order of its own `index.ts`.
  *
- * Es un `Record<EntityName, EntityDefinition>` a proposito: si anades una
- * entidad a `CATALOG` y no la defines aqui, TypeScript no compila. Y si defines
- * una que no esta en el catalogo, tampoco.
- */
-const DEFINITIONS: Record<EntityName, EntityDefinition> = {
-  // multipais
-  CREDIT_CARD,
-  CRYPTO,
-  DATE_TIME,
-  EMAIL_ADDRESS,
-  IBAN_CODE,
-  IP_ADDRESS,
-  MAC_ADDRESS,
-  UUID,
-
-  // Espana
-  ES_NIF,
-  ES_NIE,
-  ES_PASSPORT,
-
-  // Alemania
-  DE_BSNR,
-  DE_LANR,
-  DE_HEALTH_INSURANCE,
-  DE_ID_CARD,
-  DE_PASSPORT,
-  DE_SOCIAL_SECURITY,
-  DE_TAX_ID,
-  DE_VAT_ID,
-  DE_TAX_NUMBER,
-  DE_FUEHRERSCHEIN,
-  DE_HANDELSREGISTER,
-  DE_PLZ,
-  DE_KFZ,
-
-  // Reino Unido
-  UK_NHS,
-  UK_NINO,
-  UK_DRIVING_LICENCE,
-  UK_VEHICLE_REGISTRATION,
-  UK_PASSPORT,
-  UK_POSTCODE,
-
-  // Italia
-  IT_FISCAL_CODE,
-  IT_VAT_CODE,
-  IT_DRIVER_LICENSE,
-  IT_IDENTITY_CARD,
-  IT_PASSPORT,
-
-  // Suecia, Finlandia, Polonia
-  SE_PERSONNUMMER,
-  SE_ORGANISATIONSNUMMER,
-  FI_PERSONAL_IDENTITY_CODE,
-  PL_PESEL,
-};
-
-/**
- * Alcance europeo: las multipais mas Espana, Alemania, Reino Unido, Italia,
- * Suecia, Finlandia y Polonia — los siete paises que cubre el documento fuente.
+ * This list IS the catalog. Each entity file declares its name, country and
+ * category, and everything else is derived from here, so adding an entity is
+ * two steps: create its file and list it in the `index.ts` of its country.
  *
- * Dos entidades de ese alcance quedan fuera a proposito:
- * - `URL`, cuyo patron real es una alternancia de mas de 600 TLD escritos a
- *   mano, ~8 KB en una linea, incompleta por construccion y con duplicados.
- * - `PHONE_NUMBER`, que upstream no detecta con regex: delega en una libreria.
+ * European scope: the multi-country entities plus Spain, Germany, the United
+ * Kingdom, Italy, Sweden, Finland and Poland — the seven countries the source
+ * document covers. Two entities of that scope are left out on purpose:
+ * - `URL`, whose real pattern is an alternation of over 600 hand-written TLDs,
+ *   ~8 KB on one line, incomplete by construction and with duplicates.
+ * - `PHONE_NUMBER`, which upstream does not detect with a regex: it delegates
+ *   to a library.
  */
-export const REGISTRY: readonly Entity[] = ENTITY_NAMES.map((name) => ({
-  ...DEFINITIONS[name],
-  category: CATEGORY_OF[name],
-  country: COUNTRY_OF[name],
-}));
+const ENTITIES = [
+  ...GLOBAL,
+  ...SPAIN,
+  ...GERMANY,
+  ...UNITED_KINGDOM,
+  ...ITALY,
+  ...SWEDEN,
+  ...FINLAND,
+  ...POLAND,
+] as const;
 
-/** Busqueda por nombre, sin recorrer el array. */
-export const BY_NAME: Record<EntityName, Entity> = Object.fromEntries(
+/** Derived from the definitions: the union of the 39 names, not `string`. */
+export type EntityName = (typeof ENTITIES)[number]['name'];
+
+export const REGISTRY: readonly Entity[] = ENTITIES;
+
+/** Lookup by name, without walking the array. */
+export const BY_NAME = Object.fromEntries(
   REGISTRY.map((entity) => [entity.name, entity]),
 ) as Record<EntityName, Entity>;
+
+/** The 39 names in registry order. */
+export const ENTITY_NAMES: readonly EntityName[] = REGISTRY.map(
+  (entity) => entity.name,
+);
+
+const namesOf = (country: Country): readonly EntityName[] =>
+  REGISTRY.filter((entity) => entity.country === country).map(
+    (entity) => entity.name,
+  );
+
+/**
+ * The names of each country, in registry order. Written out as a literal so a
+ * country added to `Country` without listing it here does not compile.
+ */
+export const CATALOG: Record<Country, readonly EntityName[]> = {
+  EU: namesOf('EU'),
+  ES: namesOf('ES'),
+  DE: namesOf('DE'),
+  GB: namesOf('GB'),
+  IT: namesOf('IT'),
+  SE: namesOf('SE'),
+  FI: namesOf('FI'),
+  PL: namesOf('PL'),
+};
+
+export const CATEGORY_OF = Object.fromEntries(
+  REGISTRY.map((entity) => [entity.name, entity.category]),
+) as Record<EntityName, Category>;
+
+export const COUNTRY_OF = Object.fromEntries(
+  REGISTRY.map((entity) => [entity.name, entity.country]),
+) as Record<EntityName, Country>;

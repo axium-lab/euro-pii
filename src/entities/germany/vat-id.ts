@@ -1,8 +1,13 @@
 import { iso7064Mod1110 } from '../../core/checksums';
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_VAT_ID: EntityDefinition = {
+export const DE_VAT_ID = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_VAT_ID',
+  country: 'DE',
+  category: 'VAT_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German VAT identification number',
   patterns: [
     { name: 'compact', regex: String.raw`\bDE[0-9]{9}\b`, score: 0.5 },
@@ -21,4 +26,4 @@ export const DE_VAT_ID: EntityDefinition = {
       iso7064Mod1110(value.replace(/^DE/i, '').replace(/\./g, '')),
   },
   context: ['umsatzsteuer', 'ust-idnr', 'vat'],
-};
+});

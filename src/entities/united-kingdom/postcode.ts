@@ -1,12 +1,17 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 /**
  * The restricted character classes drop the letters Royal Mail never uses in
  * each position — same technique as UK_NINO. The score is still 0.1 because a
  * postcode looks a lot like any alphanumeric reference.
  */
-export const UK_POSTCODE: EntityDefinition = {
+export const UK_POSTCODE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UK_POSTCODE',
+  country: 'GB',
+  category: 'POSTAL_CODE',
+
+  // ── Detection ───────────────────────────────
   description: 'UK postal code',
   patterns: [
     {
@@ -16,4 +21,4 @@ export const UK_POSTCODE: EntityDefinition = {
     },
   ],
   context: ['postcode', 'post code', 'postal code'],
-};
+});

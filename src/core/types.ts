@@ -1,6 +1,31 @@
-import type { Category, Country, EntityName } from './catalog';
+import type { EntityName } from '../entities';
 
-export type { Category, Country, EntityName } from './catalog';
+export type { EntityName } from '../entities';
+
+/** What an entity IS, whatever the country that issues it. */
+export type Category =
+  | 'BANK_ACCOUNT'
+  | 'COMPANY_ID'
+  | 'CRYPTO'
+  | 'DATE'
+  | 'DRIVER_LICENCE'
+  | 'EMAIL'
+  | 'HEALTH_ID'
+  | 'IP_ADDRESS'
+  | 'MAC_ADDRESS'
+  | 'NATIONAL_ID'
+  | 'PASSPORT'
+  | 'PAYMENT_CARD'
+  | 'PHONE'
+  | 'POSTAL_CODE'
+  | 'SOCIAL_SECURITY'
+  | 'TAX_ID'
+  | 'UUID'
+  | 'VAT_ID'
+  | 'VEHICLE_PLATE';
+
+/** Who issues the entity. `EU` holds the ones no state issues. */
+export type Country = 'EU' | 'ES' | 'DE' | 'GB' | 'IT' | 'SE' | 'FI' | 'PL';
 
 /** `true` = confirmed · `false` = rejected · `null` = cannot be decided. */
 export type Validation = true | false | null;
@@ -16,12 +41,19 @@ export interface Pattern {
   caseSensitive?: boolean;
 }
 
-/** An entity as its own module declares it, before the catalog is attached. */
+/**
+ * An entity as its own file declares it.
+ *
+ * `name` is a plain `string` here because `EntityName` is derived FROM these
+ * definitions: each file declares it `as const satisfies EntityDefinition`,
+ * which keeps the literal and checks everything else.
+ */
 export interface EntityDefinition {
-  /** From the catalog union, not `string`: a typo does not compile. */
-  name: EntityName;
+  name: string;
+  country: Country;
+  category: Category;
   description: string;
-  patterns: Pattern[];
+  patterns: readonly Pattern[];
   /**
    * `run` receives the match with separators already stripped, plus the raw
    * match for the few validations that need them: the Finnish code carries its
@@ -34,12 +66,12 @@ export interface EntityDefinition {
     run: (value: string, raw: string) => Validation;
   };
   /** Terms that raise the score when they show up near the match. */
-  context?: string[];
+  context?: readonly string[];
 }
 
+/** An entity of the registry: its name narrowed to the derived union. */
 export interface Entity extends EntityDefinition {
-  category: Category;
-  country: Country;
+  name: EntityName;
 }
 
 export interface Detection {

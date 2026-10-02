@@ -1,7 +1,13 @@
 export { Nerium } from './nerium';
 export { NeriumError, isNeriumError } from './core/errors';
-export { BY_NAME, REGISTRY } from './entities';
-export { CATALOG, CATEGORY_OF, COUNTRY_OF, ENTITY_NAMES } from './core/catalog';
+export {
+  BY_NAME,
+  CATALOG,
+  CATEGORY_OF,
+  COUNTRY_OF,
+  ENTITY_NAMES,
+  REGISTRY,
+} from './entities';
 
 export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
 export type {

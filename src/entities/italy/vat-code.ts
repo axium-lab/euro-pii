@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { itVatValid } from './checksums';
 
-export const IT_VAT_CODE: EntityDefinition = {
+export const IT_VAT_CODE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'IT_VAT_CODE',
+  country: 'IT',
+  category: 'VAT_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'Italian VAT code',
   patterns: [
     {
@@ -15,4 +20,4 @@ export const IT_VAT_CODE: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: (value) => itVatValid(value) },
   context: ['partita iva', 'vat', 'iva'],
-};
+});

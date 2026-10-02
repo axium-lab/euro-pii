@@ -1,4 +1,5 @@
-import type { EntityDefinition, Validation } from '../../core/types';
+import { defineEntity } from '../../core/entity';
+import type { Validation } from '../../core/types';
 
 const macCheck = (value: string): Validation => {
   const hex = value.replace(/[:.-]/g, '');
@@ -7,8 +8,13 @@ const macCheck = (value: string): Validation => {
   return null;
 };
 
-export const MAC_ADDRESS: EntityDefinition = {
+export const MAC_ADDRESS = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'MAC_ADDRESS',
+  country: 'EU',
+  category: 'MAC_ADDRESS',
+
+  // ── Detection ───────────────────────────────
   description: 'Hardware MAC address',
   patterns: [
     {
@@ -26,4 +32,4 @@ export const MAC_ADDRESS: EntityDefinition = {
   ],
   validation: { kind: 'filter', run: macCheck },
   context: ['mac', 'hardware address', 'ethernet'],
-};
+});

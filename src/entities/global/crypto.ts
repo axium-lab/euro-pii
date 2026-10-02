@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { base58CheckValid } from './checksums';
 
-export const CRYPTO: EntityDefinition = {
+export const CRYPTO = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'CRYPTO',
+  country: 'EU',
+  category: 'CRYPTO',
+
+  // ── Detection ───────────────────────────────
   description: 'Bitcoin wallet address',
   patterns: [
     {
@@ -20,4 +25,4 @@ export const CRYPTO: EntityDefinition = {
       value.toLowerCase().startsWith('bc1') ? null : base58CheckValid(value),
   },
   context: ['bitcoin', 'wallet', 'btc', 'crypto', 'cartera'],
-};
+});

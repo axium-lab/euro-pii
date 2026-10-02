@@ -1,4 +1,4 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 /**
  * Collides with IT_PASSPORT and UK_PASSPORT: the paper card, the Italian
@@ -6,8 +6,13 @@ import type { EntityDefinition } from '../../core/types';
  * has a validation to tell them apart. Enable all of them and `AB1234567`
  * yields three detections — the overlap layer picks one, arbitrarily.
  */
-export const IT_IDENTITY_CARD: EntityDefinition = {
+export const IT_IDENTITY_CARD = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'IT_IDENTITY_CARD',
+  country: 'IT',
+  category: 'NATIONAL_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'Italian identity card number',
   patterns: [
     { name: 'paper', regex: String.raw`\b[A-Z]{2}\s?[0-9]{7}\b`, score: 0.01 },
@@ -19,4 +24,4 @@ export const IT_IDENTITY_CARD: EntityDefinition = {
     },
   ],
   context: ['carta di identità', 'identity card'],
-};
+});

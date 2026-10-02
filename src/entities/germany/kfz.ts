@@ -1,4 +1,4 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
 /**
  * `[\w-]` cannot be used in the KFZ lookarounds: `\w` is ASCII, so `Ä` is not a
@@ -9,8 +9,13 @@ const KFZ_BOUNDARY_BEFORE = String.raw`(?<![A-Za-z0-9_ÄÖÜäöü-])`;
 const KFZ_BOUNDARY_AFTER = String.raw`(?![A-Za-z0-9_ÄÖÜäöü])`;
 const KFZ_TAIL = String.raw`[0-9]{1,4}[EH]?`;
 
-export const DE_KFZ: EntityDefinition = {
+export const DE_KFZ = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_KFZ',
+  country: 'DE',
+  category: 'VEHICLE_PLATE',
+
+  // ── Detection ───────────────────────────────
   description: 'German vehicle registration plate',
   patterns: [
     {
@@ -45,4 +50,4 @@ export const DE_KFZ: EntityDefinition = {
     },
   ],
   context: ['kennzeichen', 'kfz', 'fahrzeug', 'matrícula'],
-};
+});

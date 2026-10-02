@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_TAX_NUMBER: EntityDefinition = {
+export const DE_TAX_NUMBER = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_TAX_NUMBER',
+  country: 'DE',
+  category: 'TAX_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'German tax number',
   patterns: [
     {
@@ -21,4 +26,4 @@ export const DE_TAX_NUMBER: EntityDefinition = {
     },
   ],
   context: ['steuernummer', 'finanzamt'],
-};
+});

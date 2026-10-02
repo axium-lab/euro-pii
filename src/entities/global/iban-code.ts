@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { ibanValid } from './checksums';
 
-export const IBAN_CODE: EntityDefinition = {
+export const IBAN_CODE = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'IBAN_CODE',
+  country: 'EU',
+  category: 'BANK_ACCOUNT',
+
+  // ── Detection ───────────────────────────────
   description: 'International bank account number',
   patterns: [
     {
@@ -24,4 +29,4 @@ export const IBAN_CODE: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: (value) => ibanValid(value) },
   context: ['iban', 'cuenta', 'account', 'bank', 'banco'],
-};
+});

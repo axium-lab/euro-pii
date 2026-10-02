@@ -1,7 +1,12 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 
-export const DE_PLZ: EntityDefinition = {
+export const DE_PLZ = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'DE_PLZ',
+  country: 'DE',
+  category: 'POSTAL_CODE',
+
+  // ── Detection ───────────────────────────────
   description: 'German postal code',
   patterns: [
     {
@@ -11,4 +16,4 @@ export const DE_PLZ: EntityDefinition = {
     },
   ],
   context: ['plz', 'postleitzahl', 'postal code'],
-};
+});

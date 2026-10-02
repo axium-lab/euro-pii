@@ -1,8 +1,13 @@
-import type { EntityDefinition } from '../../core/types';
+import { defineEntity } from '../../core/entity';
 import { nhsValid } from './checksums';
 
-export const UK_NHS: EntityDefinition = {
+export const UK_NHS = defineEntity({
+  // ── Classification ──────────────────────────
   name: 'UK_NHS',
+  country: 'GB',
+  category: 'HEALTH_ID',
+
+  // ── Detection ───────────────────────────────
   description: 'UK National Health Service number',
   patterns: [
     {
@@ -13,4 +18,4 @@ export const UK_NHS: EntityDefinition = {
   ],
   validation: { kind: 'checksum', run: (value) => nhsValid(value) },
   context: ['nhs', 'national health service', 'health service number'],
-};
+});

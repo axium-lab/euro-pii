@@ -1,5 +1,4 @@
-import { CATALOG } from '../../src/core/catalog';
-import { Nerium } from '../../src/index';
+import { CATALOG, Nerium } from '../../src/index';
 import { DOCUMENTS } from '../fixtures/documents';
 
 const ner = new Nerium();
