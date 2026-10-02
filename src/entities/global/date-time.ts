@@ -11,6 +11,7 @@ export const DATE_TIME = defineEntity({
   country: 'GLOBAL',
   kind: 'DATE',
   dataClass: 'PERSONAL',
+  identifiability: 'QUASI',
 
   // ── Detection ───────────────────────────────
   description: 'Date or timestamp',

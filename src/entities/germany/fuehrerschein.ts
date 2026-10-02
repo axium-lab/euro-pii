@@ -6,6 +6,7 @@ export const DE_FUEHRERSCHEIN = defineEntity({
   country: 'DE',
   kind: 'DRIVER_LICENCE',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'German driving licence number',

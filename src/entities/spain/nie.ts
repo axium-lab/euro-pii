@@ -18,6 +18,7 @@ export const ES_NIE = defineEntity({
   country: 'ES',
   kind: 'NATIONAL_ID',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish foreigner identification number',

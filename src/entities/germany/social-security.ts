@@ -7,6 +7,7 @@ export const DE_SOCIAL_SECURITY = defineEntity({
   country: 'DE',
   kind: 'SOCIAL_SECURITY',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'German social security number',

@@ -11,6 +11,7 @@ export const ES_PASSPORT = defineEntity({
   country: 'ES',
   kind: 'PASSPORT',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish passport number',

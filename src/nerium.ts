@@ -70,6 +70,7 @@ function detect(text: string): Detection[] {
           entity: entity.name,
           kind: entity.kind,
           dataClass: entity.dataClass,
+          identifiability: entity.identifiability,
           country: entity.country,
           start,
           end: start + value.length,

@@ -11,6 +11,7 @@ export const GB_POSTCODE = defineEntity({
   country: 'GB',
   kind: 'POSTAL_CODE',
   dataClass: 'PERSONAL',
+  identifiability: 'QUASI',
 
   // ── Detection ───────────────────────────────
   description: 'UK postal code',

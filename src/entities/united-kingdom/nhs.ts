@@ -7,6 +7,7 @@ export const GB_NHS = defineEntity({
   country: 'GB',
   kind: 'HEALTH_ID',
   dataClass: 'HEALTH',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'UK National Health Service number',

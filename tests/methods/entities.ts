@@ -29,6 +29,15 @@ console.log(
   JSON.stringify(Object.fromEntries([...byDataClass].sort()), null, 2),
 );
 
+console.log('\n── quasi-identifiers');
+console.log(
+  JSON.stringify(
+    REGISTRY.filter((entity) => entity.identifiability === 'QUASI').map(
+      (entity) => entity.name,
+    ),
+  ),
+);
+
 console.log('\n── counts');
 console.log(
   JSON.stringify(

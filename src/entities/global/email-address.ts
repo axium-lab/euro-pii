@@ -6,6 +6,7 @@ export const EMAIL_ADDRESS = defineEntity({
   country: 'GLOBAL',
   kind: 'EMAIL',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Email address',

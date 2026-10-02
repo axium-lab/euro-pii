@@ -7,6 +7,7 @@ export const ES_NIF = defineEntity({
   country: 'ES',
   kind: 'TAX_ID',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Spanish tax identification number',

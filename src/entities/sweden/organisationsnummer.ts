@@ -10,6 +10,7 @@ export const SE_ORGANISATIONSNUMMER = defineEntity({
   country: 'SE',
   kind: 'COMPANY_ID',
   dataClass: 'CORPORATE',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Swedish organisation number',

@@ -45,6 +45,19 @@ export type DataClass =
   | 'TECHNICAL'
   | 'CORPORATE';
 
+/**
+ * Whether the value singles out its subject on its own.
+ *
+ * - `DIRECT`: unique, it points at one person, company, account or device.
+ * - `QUASI`: shared by many subjects, it only identifies combined with other
+ *   data. Postcode, birth date and sex say little apart and single out most of
+ *   a population together.
+ *
+ * When in doubt, `DIRECT`: `HRB 12345` repeats across courts, but the court
+ * almost always sits next to it.
+ */
+export type Identifiability = 'DIRECT' | 'QUASI';
+
 /** Who issues the entity. `GLOBAL` holds the ones no state issues. */
 export type Country =
   | 'GLOBAL'
@@ -82,6 +95,7 @@ export interface EntityDefinition {
   country: Country;
   kind: Kind;
   dataClass: DataClass;
+  identifiability: Identifiability;
   description: string;
   patterns: readonly Pattern[];
   /**
@@ -108,6 +122,7 @@ export interface Detection {
   entity: EntityName;
   kind: Kind;
   dataClass: DataClass;
+  identifiability: Identifiability;
   country: Country;
   /** Offset into the ORIGINAL text, never into the anonymized one. */
   start: number;

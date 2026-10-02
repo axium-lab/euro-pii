@@ -7,6 +7,7 @@ export const CRYPTO = defineEntity({
   country: 'GLOBAL',
   kind: 'CRYPTO',
   dataClass: 'FINANCIAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Bitcoin wallet address',

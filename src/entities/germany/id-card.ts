@@ -7,6 +7,7 @@ export const DE_ID_CARD = defineEntity({
   country: 'DE',
   kind: 'NATIONAL_ID',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'German identity card number',

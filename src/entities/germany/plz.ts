@@ -6,6 +6,7 @@ export const DE_PLZ = defineEntity({
   country: 'DE',
   kind: 'POSTAL_CODE',
   dataClass: 'PERSONAL',
+  identifiability: 'QUASI',
 
   // ── Detection ───────────────────────────────
   description: 'German postal code',

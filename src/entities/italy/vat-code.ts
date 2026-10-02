@@ -7,6 +7,7 @@ export const IT_VAT_CODE = defineEntity({
   country: 'IT',
   kind: 'VAT_ID',
   dataClass: 'CORPORATE',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Italian VAT code',

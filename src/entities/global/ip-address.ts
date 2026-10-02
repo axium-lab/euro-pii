@@ -8,6 +8,7 @@ export const IP_ADDRESS = defineEntity({
   country: 'GLOBAL',
   kind: 'IP_ADDRESS',
   dataClass: 'TECHNICAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'IP address',

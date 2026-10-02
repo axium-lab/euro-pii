@@ -7,6 +7,7 @@ export const DE_TAX_ID = defineEntity({
   country: 'DE',
   kind: 'TAX_ID',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'German tax identification number',

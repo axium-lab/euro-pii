@@ -15,6 +15,7 @@ export const SE_PERSONNUMMER = defineEntity({
   country: 'SE',
   kind: 'NATIONAL_ID',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Swedish personal identity number',

@@ -15,6 +15,7 @@ export const DE_KFZ = defineEntity({
   country: 'DE',
   kind: 'VEHICLE_PLATE',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'German vehicle registration plate',

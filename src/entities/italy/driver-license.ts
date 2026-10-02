@@ -6,6 +6,7 @@ export const IT_DRIVER_LICENSE = defineEntity({
   country: 'IT',
   kind: 'DRIVER_LICENCE',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'Italian driving licence number',

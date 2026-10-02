@@ -12,6 +12,7 @@ export const GB_NINO = defineEntity({
   country: 'GB',
   kind: 'SOCIAL_SECURITY',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'UK National Insurance number',

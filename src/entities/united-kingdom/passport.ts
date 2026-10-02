@@ -6,6 +6,7 @@ export const GB_PASSPORT = defineEntity({
   country: 'GB',
   kind: 'PASSPORT',
   dataClass: 'PERSONAL',
+  identifiability: 'DIRECT',
 
   // ── Detection ───────────────────────────────
   description: 'UK passport number',
