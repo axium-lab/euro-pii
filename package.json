@@ -1,6 +1,6 @@
 {
-  "name": "euro-pii",
-  "version": "1.0.0",
+  "name": "@axium-lab/euro-pii",
+  "version": "1.0.1",
   "description": "Europe-first PII detection and anonymization: regex, checksums and context words. Zero dependencies.",
   "keywords": [
     "pii",
