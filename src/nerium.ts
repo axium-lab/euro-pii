@@ -1,6 +1,14 @@
 import { escapeRegex, sanitize } from './core/sanitize';
-import type { Detection, Entity, Methods, ScanResult } from './core/types';
-import { REGISTRY } from './entities';
+import type {
+  Country,
+  Detection,
+  Entity,
+  EntityName,
+  Kind,
+  Methods,
+  ScanResult,
+} from './core/types';
+import { CATALOG, REGISTRY } from './entities';
 
 /** Detections scoring below this are dropped. */
 const MIN_SCORE = 0.4;
@@ -36,6 +44,30 @@ export class Nerium implements Methods {
 
   supported_entities(): Entity[] {
     return [...REGISTRY];
+  }
+
+  /** Every country with the names of its entities, in registry order. */
+  supported_countries(): Record<Country, EntityName[]> {
+    return Object.fromEntries(
+      Object.entries(CATALOG).map(([country, names]) => [country, [...names]]),
+    ) as Record<Country, EntityName[]>;
+  }
+
+  /**
+   * The kinds some entity uses, alphabetically, with the names of their
+   * entities in registry order. A `Kind` no entity uses is left out: `PHONE`
+   * is declared but nothing detects it.
+   */
+  supported_kinds(): Partial<Record<Kind, EntityName[]>> {
+    const byKind: Partial<Record<Kind, EntityName[]>> = {};
+
+    for (const entity of REGISTRY) {
+      (byKind[entity.kind] ??= []).push(entity.name);
+    }
+
+    return Object.fromEntries(
+      Object.entries(byKind).sort(([a], [b]) => a.localeCompare(b)),
+    );
   }
 }
 

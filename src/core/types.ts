@@ -142,4 +142,6 @@ export type ScanResult =
 export interface Methods {
   text: (text: string, anonymizes: boolean) => ScanResult;
   supported_entities: () => Entity[];
+  supported_countries: () => Record<Country, EntityName[]>;
+  supported_kinds: () => Partial<Record<Kind, EntityName[]>>;
 }
