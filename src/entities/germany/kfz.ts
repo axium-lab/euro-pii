@@ -3,7 +3,7 @@ import { defineEntity } from '../../core/entity';
 /**
  * `[\w-]` cannot be used in the KFZ lookarounds: `\w` is ASCII, so `Ä` is not a
  * word character and the lookbehind fails to block. Writing the class out with
- * the umlauts fixes it — see docs/deteccion-regex.md:167.
+ * the umlauts fixes it.
  */
 const KFZ_BOUNDARY_BEFORE = String.raw`(?<![A-Za-z0-9_ÄÖÜäöü-])`;
 const KFZ_BOUNDARY_AFTER = String.raw`(?![A-Za-z0-9_ÄÖÜäöü])`;

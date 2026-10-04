@@ -7,8 +7,10 @@ const ner = new Nerium();
 const show = (value: unknown) =>
   console.log(inspect(value, { depth: null, maxArrayLength: null }));
 
+
+
 console.log('\n── supported_entities');
-show(ner.supported_entities());
+//show(ner.supported_entities());
 
 console.log('\n── supported_countries');
 show(ner.supported_countries());

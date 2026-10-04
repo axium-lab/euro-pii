@@ -11,7 +11,7 @@ const GAP = `(?:${SPACE}|${DASH})?`;
 
 /**
  * The prefix is mandatory here, and that is a deliberate divergence from
- * docs/deteccion-regex.md:489, where it is optional (`[X-Z]?`).
+ * Presidio, where it is optional (`[X-Z]?`).
  *
  * Upstream can afford an optional prefix because a failing checksum removes the
  * detection, so a plain NIF matching this pattern disappears on validation. We
