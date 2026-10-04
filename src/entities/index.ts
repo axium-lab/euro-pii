@@ -35,7 +35,7 @@ const ENTITIES = [
   ...POLAND,
 ] as const;
 
-/** Derived from the definitions: the union of the 39 names, not `string`. */
+/** Derived from the definitions: the union of the 44 names, not `string`. */
 export type EntityName = (typeof ENTITIES)[number]['name'];
 
 export const REGISTRY: readonly Entity[] = ENTITIES;
@@ -45,7 +45,7 @@ export const BY_NAME = Object.fromEntries(
   REGISTRY.map((entity) => [entity.name, entity]),
 ) as Record<EntityName, Entity>;
 
-/** The 39 names in registry order. */
+/** The 44 names in registry order. */
 export const ENTITY_NAMES: readonly EntityName[] = REGISTRY.map(
   (entity) => entity.name,
 );

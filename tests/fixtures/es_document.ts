@@ -6,6 +6,17 @@ IDENTIFICACIÓN ESPAÑOLA
 El titular presenta su NIF 12345678Z para formalizar el contrato.
 Como identificación de extranjero se registra el NIE X1234567L.
 También se adjunta el pasaporte ABC123456.
+Su número de afiliación a la Seguridad Social es 28/12345678/40.
+
+DATOS DE LA EMPRESA
+
+La sociedad contratante tiene CIF B12345674.
+Para operaciones intracomunitarias usa el NIF-IVA ESA58818501.
+
+VEHÍCULOS
+
+El vehículo asignado lleva matrícula 1234 BCD.
+El coche de sustitución conserva la matrícula M-1234-AB.
 
 DOCUMENTACIÓN EXTRANJERA
 
@@ -19,6 +30,7 @@ El correo alternativo es usuario.prueba@empresa.es.
 DATOS BANCARIOS Y DE PAGO
 
 La cuenta bancaria principal es el IBAN ES9121000418450200051332.
+En los recibos antiguos aparece el CCC 2100 0418 45 0200051332.
 La tarjeta de crédito registrada es 4111111111111111.
 También consta una tarjeta Mastercard 5555555555554444.
 
@@ -77,6 +89,11 @@ export const ES_EXPECTED = [
   'ES_NIF',
   'ES_NIE',
   'ES_PASSPORT',
+  'ES_CIF',
+  'ES_VAT_ID',
+  'ES_NUSS',
+  'ES_CCC',
+  'ES_VEHICLE_PLATE',
 
   // Extranjeras: el registro corre entero, sin filtro por país
   'DE_ID_CARD',
