@@ -1,4 +1,4 @@
-import { Nerium } from '../../src/index';
+import { EuroPii } from '../../src/index';
 import {
   BAD_CHECKSUM_WITH_CONTEXT,
   EXAMPLE_TEXT_ALL_ES_ENTITIES,
@@ -9,7 +9,7 @@ import {
   TWO_DIFFERENT_NIF,
 } from '../fixtures/documents';
 
-const ner = new Nerium();
+const ner = new EuroPii();
 
 const scenarios = {
   spanish_document: EXAMPLE_TEXT_ALL_ES_ENTITIES,

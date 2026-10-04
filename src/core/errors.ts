@@ -1,20 +1,20 @@
-export type NeriumErrorCategory = 'invalid_input' | 'unknown_entity';
+export type EuroPiiErrorCategory = 'invalid_input' | 'unknown_entity';
 
-export interface NeriumErrorParams {
-  category: NeriumErrorCategory;
+export interface EuroPiiErrorParams {
+  category: EuroPiiErrorCategory;
   message: string;
 }
 
-export class NeriumError extends Error {
-  readonly category: NeriumErrorCategory;
+export class EuroPiiError extends Error {
+  readonly category: EuroPiiErrorCategory;
 
-  constructor({ category, message }: NeriumErrorParams) {
+  constructor({ category, message }: EuroPiiErrorParams) {
     super(message);
-    this.name = 'NeriumError';
+    this.name = 'EuroPiiError';
     this.category = category;
   }
 }
 
-export function isNeriumError(value: unknown): value is NeriumError {
-  return value instanceof NeriumError;
+export function isEuroPiiError(value: unknown): value is EuroPiiError {
+  return value instanceof EuroPiiError;
 }

@@ -30,7 +30,7 @@ const CONTEXT_WINDOW_CHARS = 40;
  */
 const placeholder = (detection: Detection) => `<${detection.entity}>`;
 
-export class Nerium implements Methods {
+export class EuroPii implements Methods {
   /** Detects only, and leaves the decision to the caller. */
   scan(text: string, selection?: Selection): Detection[] {
     return detect(text, select(selection));

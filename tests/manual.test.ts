@@ -1,7 +1,7 @@
 import { inspect } from 'node:util';
-import { Nerium } from '../src/index';
+import { EuroPii } from '../src/index';
 
-const ner = new Nerium();
+const ner = new EuroPii();
 
 // `inspect` without a depth limit: a plain console.log cuts nested objects short.
 const show = (value: unknown) =>

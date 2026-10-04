@@ -1,7 +1,26 @@
 {
-  "name": "@axium-lab/nerium",
+  "name": "euro-pii",
   "version": "0.1.0",
-  "description": "Regex-only PII detection and anonymization for European entities",
+  "description": "Europe-first PII detection and anonymization: regex, checksums and context words. Zero dependencies.",
+  "keywords": [
+    "pii",
+    "gdpr",
+    "anonymization",
+    "anonymize",
+    "redaction",
+    "redact",
+    "privacy",
+    "personal-data",
+    "data-protection",
+    "europe",
+    "eu",
+    "dni",
+    "nif",
+    "iban",
+    "checksum",
+    "regex",
+    "typescript"
+  ],
   "license": "UNLICENSED",
   "type": "module",
   "main": "./dist/cjs/index.cjs",
@@ -23,8 +42,7 @@
     "url": "git@ssh.dev.azure.com:v3/axium-lab/pocs/documentation-NER"
   },
   "publishConfig": {
-    "@axium-lab:registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "access": "public"
   },
   "scripts": {
     "build": "tsup",

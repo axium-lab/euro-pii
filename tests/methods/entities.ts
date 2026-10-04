@@ -1,9 +1,9 @@
-import { Nerium, REGISTRY } from '../../src/index';
+import { EuroPii, REGISTRY } from '../../src/index';
 
 // Careful: JSON.stringify drops `validation.run` because it is a function. Its
 // `kind` survives, which is the part worth looking at here.
 console.log('\n── full registry');
-console.log(JSON.stringify(new Nerium().supported_entities(), null, 2));
+console.log(JSON.stringify(new EuroPii().supported_entities(), null, 2));
 
 console.log('\n── grouped by kind');
 const byKind = new Map<string, string[]>();

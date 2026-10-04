@@ -1,11 +1,11 @@
-# nerium
+# euro-pii
 
 Detect and anonymize personal data in European text, **without machine learning**: regular expressions, checksums and context words. It is deterministic, has zero runtime dependencies and runs anywhere JavaScript does.
 
 ```ts
-import { Nerium } from '@axium-lab/nerium';
+import { EuroPii } from 'euro-pii';
 
-new Nerium().anonymize('El titular con DNI 12345678-Z firma el contrato.').anonymized_text;
+new EuroPii().anonymize('El titular con DNI 12345678-Z firma el contrato.').anonymized_text;
 // 'El titular con DNI <ES_NIF> firma el contrato.'
 ```
 
@@ -37,18 +37,18 @@ new Nerium().anonymize('El titular con DNI 12345678-Z firma el contrato.').anony
 ## Installation
 
 ```bash
-npm install @axium-lab/nerium
+npm install euro-pii
 # or
-pnpm add @axium-lab/nerium
+pnpm add euro-pii
 # or
-bun add @axium-lab/nerium
+bun add euro-pii
 ```
 
-Requires Node.js 22 or later. There is nothing to configure: `new Nerium()` takes no options.
+Requires Node.js 22 or later. There is nothing to configure: `new EuroPii()` takes no options.
 
 ## Usage
 
-`Nerium` has two ways in:
+`EuroPii` has two ways in:
 
 | Method                    | Does                                                           |
 | ------------------------- | -------------------------------------------------------------- |
@@ -58,9 +58,9 @@ Requires Node.js 22 or later. There is nothing to configure: `new Nerium()` take
 ### Detecting: `scan()`
 
 ```ts
-import { Nerium } from '@axium-lab/nerium';
+import { EuroPii } from 'euro-pii';
 
-const ner = new Nerium();
+const ner = new EuroPii();
 
 ner.scan('Mi DNI es 12345678Z y mi correo luis@example.com');
 ```
@@ -160,7 +160,7 @@ ner.anonymize(document, {
 
 - **The fields intersect.** An entity is looked for only if it matches every field present. `except` then removes names from whatever is left.
 - **`GLOBAL` is a country like any other.** `countries: ['ES']` leaves out IBAN, cards and email; write `['ES', 'GLOBAL']` to keep them.
-- **Mistakes throw.** A selection that matches nothing, or an unknown country, kind or name, throws a [`NeriumError`](#errors). A filter that silently detects nothing would look exactly like a clean text.
+- **Mistakes throw.** A selection that matches nothing, or an unknown country, kind or name, throws a [`EuroPiiError`](#errors). A filter that silently detects nothing would look exactly like a clean text.
 
 > [!WARNING]
 > Whatever you leave out **stays in plain text**. With `countries: ['ES']`, a German tax ID in the same document is not touched.
@@ -243,7 +243,7 @@ const redacted = ner
 
 ### Errors
 
-Invalid options throw a `NeriumError` with a `category`:
+Invalid options throw a `EuroPiiError` with a `category`:
 
 | Category         | Thrown when                                                                                                  |
 | ---------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -253,12 +253,12 @@ Invalid options throw a `NeriumError` with a `category`:
 A kind that exists in the `Kind` type but no entity uses (`PHONE`) counts as unknown.
 
 ```ts
-import { isNeriumError } from '@axium-lab/nerium';
+import { isEuroPiiError } from 'euro-pii';
 
 try {
   ner.anonymize(document, { countries: ['ES'], entities: ['DE_TAX_ID'] });
 } catch (error) {
-  if (isNeriumError(error)) console.error(error.category, error.message);
+  if (isEuroPiiError(error)) console.error(error.category, error.message);
   // invalid_input  No entity matches the selection {"countries":["ES"],"entities":["DE_TAX_ID"]}.
 }
 ```
@@ -267,7 +267,7 @@ With TypeScript most of these never get past the compiler. The runtime checks ar
 
 ## API reference
 
-### `class Nerium`
+### `class EuroPii`
 
 | Method                                     | Returns                                                                           |
 | ------------------------------------------ | --------------------------------------------------------------------------------- |
@@ -318,9 +318,9 @@ type Action = 'mask' | 'keep' | 'block';
 | `BY_NAME`                    | `Record<EntityName, Entity>`: lookup by name, e.g. `BY_NAME.ES_NIF` |
 | `ENTITY_NAMES`               | `readonly EntityName[]`                                            |
 | `CATALOG`                    | `Record<Country, readonly EntityName[]>`                           |
-| `NeriumError`, `isNeriumError` | The error class and its type guard                                |
+| `EuroPiiError`, `isEuroPiiError` | The error class and its type guard                                |
 
-Types: `Action`, `AnonymizeOptions`, `AnonymizeResult`, `Country`, `DataClass`, `Detection`, `Entity`, `EntityDefinition`, `EntityName`, `Identifiability`, `Kind`, `Pattern`, `Policy`, `Selection`, `Validation`, `NeriumErrorCategory`, `NeriumErrorParams`.
+Types: `Action`, `AnonymizeOptions`, `AnonymizeResult`, `Country`, `DataClass`, `Detection`, `Entity`, `EntityDefinition`, `EntityName`, `Identifiability`, `Kind`, `Pattern`, `Policy`, `Selection`, `Validation`, `EuroPiiErrorCategory`, `EuroPiiErrorParams`.
 
 ## Supported entities
 
@@ -512,7 +512,7 @@ Worth knowing:
 
 ## Limitations
 
-What nerium does **not** detect matters as much as what it does:
+What euro-pii does **not** detect matters as much as what it does:
 
 - **Names, addresses and company names.** A name has no shape a regex can recognise; detecting it needs a language model. In `El titular Pedro Losas con DNI <ES_NIF>`, the name stays in plain text.
 - **Phone numbers.** Reliable detection needs a numbering-plan library, not a regex.
@@ -520,7 +520,7 @@ What nerium does **not** detect matters as much as what it does:
 - **Countries outside the list above.** A Danish or Greek national ID is only caught if it happens to match a multi-country entity.
 - **Bare numbers from France, the Netherlands, Portugal, Belgium and Austria.** Their identifiers are only covered where they cannot be confused with another entity. Plain digit runs (the SIREN, the BSN, the Portuguese NIF) are left out, and the Belgian national number, Belgian enterprise number, Austrian social security number and French NIR are only found in their grouped form (`85.07.30-033.28`, not `85073003328`).
 
-So `blocked: false`, or an empty `scan()`, means "nothing I know how to look for", **not** "this text contains no personal data". Use nerium as one layer of a pipeline, not as the guarantee.
+So `blocked: false`, or an empty `scan()`, means "nothing I know how to look for", **not** "this text contains no personal data". Use euro-pii as one layer of a pipeline, not as the guarantee.
 
 ## Contributing
 

@@ -1,7 +1,7 @@
-import { CATALOG, Nerium } from '../../src/index';
+import { CATALOG, EuroPii } from '../../src/index';
 import { DOCUMENTS } from '../fixtures/documents';
 
-const ner = new Nerium();
+const ner = new EuroPii();
 
 /**
  * Expected entities that did not show up.

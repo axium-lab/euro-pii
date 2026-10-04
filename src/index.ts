@@ -1,5 +1,5 @@
-export { Nerium } from './nerium';
-export { NeriumError, isNeriumError } from './core/errors';
+export { EuroPii } from './euro-pii';
+export { EuroPiiError, isEuroPiiError } from './core/errors';
 export {
   BY_NAME,
   CATALOG,
@@ -7,7 +7,7 @@ export {
   REGISTRY,
 } from './entities';
 
-export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
+export type { EuroPiiErrorCategory, EuroPiiErrorParams } from './core/errors';
 export type {
   Action,
   AnonymizeOptions,

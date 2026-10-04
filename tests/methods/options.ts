@@ -1,7 +1,7 @@
-import { isNeriumError, Nerium } from '../../src/index';
+import { isEuroPiiError, EuroPii } from '../../src/index';
 import type { AnonymizeOptions, AnonymizeResult } from '../../src/index';
 
-const ner = new Nerium();
+const ner = new EuroPii();
 
 /**
  * Checks the selection and the policy rules. Like `documents.ts`, it exits
@@ -19,7 +19,7 @@ const throws = (options: AnonymizeOptions) => {
     ner.anonymize(SAMPLE, options);
     return false;
   } catch (error) {
-    return isNeriumError(error);
+    return isEuroPiiError(error);
   }
 };
 

@@ -1,5 +1,5 @@
 import { BY_NAME, CATALOG, REGISTRY } from '../entities';
-import { NeriumError } from './errors';
+import { EuroPiiError } from './errors';
 import type {
   Action,
   AnonymizeOptions,
@@ -40,7 +40,7 @@ export function select(selection: Selection = {}): Entity[] {
   );
 
   if (chosen.length === 0) {
-    throw new NeriumError({
+    throw new EuroPiiError({
       category: 'invalid_input',
       message: `No entity matches the selection ${JSON.stringify(selection)}.`,
     });
@@ -67,7 +67,7 @@ export function plan(options: AnonymizeOptions = {}): Entity[] {
     selection.except?.includes(entity.name),
   );
   if (contradicted.length > 0) {
-    throw new NeriumError({
+    throw new EuroPiiError({
       category: 'invalid_input',
       message: `Blocked by the policy and excluded by \`except\` at once: ${contradicted.map((entity) => entity.name).join(', ')}.`,
     });
@@ -113,7 +113,7 @@ function checkKnown(
   const unknown = (values ?? []).filter((value) => !known.has(value));
   if (unknown.length === 0) return;
 
-  throw new NeriumError({
+  throw new EuroPiiError({
     category: what === 'entity' ? 'unknown_entity' : 'invalid_input',
     message: `Unknown ${what}: ${unknown.join(', ')}.`,
   });
