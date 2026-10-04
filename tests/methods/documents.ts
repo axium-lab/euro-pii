@@ -14,7 +14,7 @@ const ner = new Nerium();
 const missing: string[] = [];
 
 for (const [country, { text, expected }] of Object.entries(DOCUMENTS)) {
-  const result = ner.text(text);
+  const result = ner.anonymize(text);
   if (result.blocked) throw new Error(`Unexpected block for ${country}.`);
 
   const detected = new Set(result.entities.map((d) => d.entity));

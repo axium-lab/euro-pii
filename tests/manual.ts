@@ -2,7 +2,7 @@
 import { spawnSync } from 'node:child_process';
 
 // run('documents');
-run('text');
+run('anonymize');
 // run('entities');
 // run('options');
 

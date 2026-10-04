@@ -23,7 +23,7 @@ const scenarios = {
 
 for (const [name, text] of Object.entries(scenarios)) {
   console.log(`\n── ${name}`);
-  console.log(JSON.stringify(ner.text(text), null, 2));
+  console.log(JSON.stringify(ner.anonymize(text), null, 2));
 }
 
 // `default: 'block'` blocks when there are DETECTIONS, and the blocked result
@@ -33,8 +33,8 @@ for (const [name, text] of Object.entries(scenarios)) {
 // know how to look for", not "this text is safe".
 // console.log('\n── with detections, block -> blocks');
 // console.log(
-//   JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, { policy: { default: 'block' } }), null, 2),
+//   JSON.stringify(ner.anonymize(EXAMPLE_TEXT_ALL_ES_ENTITIES, { policy: { default: 'block' } }), null, 2),
 // );
 
 // console.log('\n── without detections, block -> does NOT block');
-// console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, { policy: { default: 'block' } }), null, 2));
+// console.log(JSON.stringify(ner.anonymize(NO_IDENTIFIERS, { policy: { default: 'block' } }), null, 2));

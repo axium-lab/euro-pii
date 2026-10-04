@@ -1,15 +1,15 @@
 import { actionOf, plan, select } from './core/options';
 import { escapeRegex, sanitize } from './core/sanitize';
 import type {
+  AnonymizeOptions,
+  AnonymizeResult,
   Country,
   Detection,
   Entity,
   EntityName,
   Kind,
   Methods,
-  ScanResult,
   Selection,
-  TextOptions,
 } from './core/types';
 import { CATALOG, REGISTRY } from './entities';
 
@@ -40,7 +40,7 @@ export class Nerium implements Methods {
    * Detects and applies the policy. Any detection whose action is `'block'`
    * blocks the whole text, and the result then carries no text at all.
    */
-  text(text: string, options: TextOptions = {}): ScanResult {
+  anonymize(text: string, options: AnonymizeOptions = {}): AnonymizeResult {
     const policy = options.policy ?? {};
     const entities = detect(text, plan(options));
     const actionFor = (detection: Detection) =>

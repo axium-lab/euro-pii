@@ -1,5 +1,5 @@
 import { isNeriumError, Nerium } from '../../src/index';
-import type { ScanResult, TextOptions } from '../../src/index';
+import type { AnonymizeOptions, AnonymizeResult } from '../../src/index';
 
 const ner = new Nerium();
 
@@ -14,16 +14,16 @@ const check = (name: string, ok: boolean) => {
   if (!ok) failed.push(name);
 };
 
-const throws = (options: TextOptions) => {
+const throws = (options: AnonymizeOptions) => {
   try {
-    ner.text(SAMPLE, options);
+    ner.anonymize(SAMPLE, options);
     return false;
   } catch (error) {
     return isNeriumError(error);
   }
 };
 
-const found = (result: ScanResult | ScanResult['entities']) =>
+const found = (result: AnonymizeResult | AnonymizeResult['entities']) =>
   (Array.isArray(result) ? result : result.entities).map((d) => d.entity);
 
 const SAMPLE =
@@ -52,7 +52,7 @@ check(
 );
 
 console.log('\n── policy');
-const masked = ner.text(SAMPLE, { policy: { entities: { EMAIL_ADDRESS: 'keep' } } });
+const masked = ner.anonymize(SAMPLE, { policy: { entities: { EMAIL_ADDRESS: 'keep' } } });
 check(
   'keep leaves the value but still reports it',
   !masked.blocked &&
@@ -60,7 +60,7 @@ check(
     found(masked).includes('EMAIL_ADDRESS'),
 );
 
-const blocked = ner.text(SAMPLE, { policy: { kinds: { BANK_ACCOUNT: 'block' } } });
+const blocked = ner.anonymize(SAMPLE, { policy: { kinds: { BANK_ACCOUNT: 'block' } } });
 check(
   'block by kind, blocked_by names the culprit',
   blocked.blocked && found(blocked.blocked_by).join() === 'IBAN_CODE',
@@ -68,14 +68,14 @@ check(
 
 check(
   'entities beats kinds',
-  !ner.text(SAMPLE, {
+  !ner.anonymize(SAMPLE, {
     policy: { kinds: { BANK_ACCOUNT: 'block' }, entities: { IBAN_CODE: 'mask' } },
   }).blocked,
 );
 
 check(
   'an explicit block is looked for outside the selection',
-  ner.text(SAMPLE, {
+  ner.anonymize(SAMPLE, {
     countries: ['ES'],
     policy: { kinds: { BANK_ACCOUNT: 'block' } },
   }).blocked,
@@ -83,7 +83,7 @@ check(
 
 check(
   "default: 'block' stays within the selection",
-  !ner.text('IBAN ES9121000418450200051332', {
+  !ner.anonymize('IBAN ES9121000418450200051332', {
     countries: ['ES'],
     policy: { default: 'block' },
   }).blocked,

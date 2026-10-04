@@ -2,12 +2,12 @@ import { BY_NAME, CATALOG, REGISTRY } from '../entities';
 import { NeriumError } from './errors';
 import type {
   Action,
+  AnonymizeOptions,
   Entity,
   EntityName,
   Kind,
   Policy,
   Selection,
-  TextOptions,
 } from './types';
 
 const ACTIONS: ReadonlySet<string> = new Set<Action>(['mask', 'block', 'keep']);
@@ -50,10 +50,10 @@ export function select(selection: Selection = {}): Entity[] {
 }
 
 /**
- * The entities `text()` looks for: the selection plus every entity the policy
+ * The entities `anonymize()` looks for: the selection plus every entity the policy
  * blocks explicitly, in registry order.
  */
-export function plan(options: TextOptions = {}): Entity[] {
+export function plan(options: AnonymizeOptions = {}): Entity[] {
   const { policy = {}, ...selection } = options;
 
   checkPolicy(policy);

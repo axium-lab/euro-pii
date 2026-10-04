@@ -27,11 +27,11 @@ const sample =
 console.log('\n── scan, solo ES (GLOBAL hay que pedirlo aparte)');
 show(ner.scan(sample, { countries: ['ES'] }));
 
-// `text` detecta y aplica la política. Sin opciones busca todo y enmascara todo.
-console.log('\n── text, enmascarando todo menos el correo');
-show(ner.text(sample, { policy: { entities: { EMAIL_ADDRESS: 'keep' } } }));
+// `anonymize` detecta y aplica la política. Sin opciones busca todo y enmascara todo.
+console.log('\n── anonymize, enmascarando todo menos el correo');
+show(ner.anonymize(sample, { policy: { entities: { EMAIL_ADDRESS: 'keep' } } }));
 
 // Una cuenta bancaria bloquea el texto entero: no vuelve `anonymized_text`,
 // y `blocked_by` dice qué lo ha bloqueado.
-console.log('\n── text, bloqueando si aparece una cuenta bancaria');
-show(ner.text(sample, { policy: { kinds: { BANK_ACCOUNT: 'block' } } }));
+console.log('\n── anonymize, bloqueando si aparece una cuenta bancaria');
+show(ner.anonymize(sample, { policy: { kinds: { BANK_ACCOUNT: 'block' } } }));

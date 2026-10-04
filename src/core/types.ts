@@ -135,7 +135,7 @@ export interface Detection {
   confirmedBy: 'checksum' | 'context' | null;
 }
 
-/** What `text()` does with a detection. */
+/** What `anonymize()` does with a detection. */
 export type Action = 'mask' | 'block' | 'keep';
 
 /**
@@ -170,17 +170,17 @@ export interface Policy {
   entities?: Partial<Record<EntityName, Action>>;
 }
 
-export interface TextOptions extends Selection {
+export interface AnonymizeOptions extends Selection {
   policy?: Policy;
 }
 
-export type ScanResult =
+export type AnonymizeResult =
   | { blocked: false; anonymized_text: string; entities: Detection[] }
   | { blocked: true; blocked_by: Detection[]; entities: Detection[] };
 
 export interface Methods {
   scan: (text: string, selection?: Selection) => Detection[];
-  text: (text: string, options?: TextOptions) => ScanResult;
+  anonymize: (text: string, options?: AnonymizeOptions) => AnonymizeResult;
   supported_entities: () => Entity[];
   supported_countries: () => Record<Country, EntityName[]>;
   supported_kinds: () => Partial<Record<Kind, EntityName[]>>;

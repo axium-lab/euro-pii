@@ -10,6 +10,8 @@ export {
 export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
 export type {
   Action,
+  AnonymizeOptions,
+  AnonymizeResult,
   Country,
   DataClass,
   Detection,
@@ -21,8 +23,6 @@ export type {
   Methods,
   Pattern,
   Policy,
-  ScanResult,
   Selection,
-  TextOptions,
   Validation,
 } from './core/types';
