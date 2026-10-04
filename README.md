@@ -13,12 +13,13 @@ There is nothing to configure: `new Nerium()` takes no options.
 ```ts
 import { Nerium } from '@axium-lab/nerium';
 
-const { anonymized_text, entities } = new Nerium().text(document, true);
+const { anonymized_text, entities } = new Nerium().text(document);
 ```
 
 | Method                  | Returns                                                  |
 | ----------------------- | -------------------------------------------------------- |
-| `text(text, anonymizes)` | `ScanResult`: the masked text plus what was found       |
+| `scan(text, selection?)` | `Detection[]`: what was found, nothing else             |
+| `text(text, options?)`  | `ScanResult`: the masked text plus what was found        |
 | `supported_entities()`  | `Entity[]`: every entity with its patterns and validation |
 | `supported_countries()` | `Record<Country, EntityName[]>`: each country and its entities |
 | `supported_kinds()`     | `Partial<Record<Kind, EntityName[]>>`: each kind in use and its entities |
@@ -28,7 +29,7 @@ const { anonymized_text, entities } = new Nerium().text(document, true);
 Text goes in; out comes the text with the identifiers masked, plus the detail of what was found:
 
 ```ts
-new Nerium().text('El titular con DNI 12345678-Z firma el contrato.', true);
+new Nerium().text('El titular con DNI 12345678-Z firma el contrato.');
 ```
 
 ```json
@@ -55,33 +56,64 @@ new Nerium().text('El titular con DNI 12345678-Z firma el contrato.', true);
 
 **Offsets refer to the original text**, never to the anonymized one. `<ES_NIF>` is 8 characters long and `12345678-Z` is 10, so those positions are no longer valid in the masked text.
 
-#### The second argument: mask or block
+`scan()` takes the same selection and returns only `entities`, so the caller decides what to do with them.
+
+#### Choosing what to look for
+
+With no options every entity is looked for. These fields narrow it down:
 
 ```ts
-ner.text(document, true); // returns the anonymized text
-ner.text(document, false); // if it finds anything, blocks and does NOT return the text
+ner.text(document, {
+  countries: ['ES', 'GLOBAL'],
+  kinds: ['TAX_ID', 'BANK_ACCOUNT'],
+  entities: ['ES_NIF', 'IBAN_CODE'],
+  except: ['ES_VEHICLE_PLATE'],
+});
 ```
 
-The blocked result **has no text field**, so TypeScript stops you from reading it by mistake:
+- **The fields intersect**: an entity is looked for only if it matches every field present. `except` then removes names from what is left.
+- **`GLOBAL` is a country like any other.** `countries: ['ES']` leaves out IBAN, email and cards: add `'GLOBAL'` to keep them.
+- **Selecting nothing throws** a `NeriumError`, and so does an unknown country, kind or name. A filter that quietly detects nothing looks exactly like a clean text.
+
+The selection runs **before** detecting, not on the output: when two detections overlap only one survives, so an entity filtered out afterwards could still have taken down one you wanted.
+
+Narrowing it has a cost: whatever is left out **stays in plain text**. `countries: ['ES']` leaves a German tax ID untouched.
+
+#### Deciding what to do: the policy
+
+Each detection gets an action: `'mask'` replaces it with `<ENTITY>`, `'keep'` leaves it as it is, and `'block'` blocks the whole text.
+
+```ts
+ner.text(document, {
+  policy: {
+    default: 'mask',
+    kinds: { BANK_ACCOUNT: 'block' },
+    entities: { EMAIL_ADDRESS: 'keep' },
+  },
+});
+```
+
+- The most specific key wins: `entities`, then `kinds`, then `default`, which is `'mask'` when left out.
+- **Kept and masked detections are both reported** in `entities`. `keep` decides the text, not the report.
+- **An explicit `'block'` (in `entities` or `kinds`) is looked for even outside the selection**, so narrowing the selection never switches a block off. Blocking an entity that is also in `except` throws. A `'block'` that only comes from `default` stays within the selection.
+- `policy: { default: 'block' }` blocks on anything found.
+
+The blocked result **has no text field**, so TypeScript stops you from reading it by mistake, and `blocked_by` says which detections blocked it:
 
 ```ts
 type ScanResult =
   | { blocked: false; anonymized_text: string; entities: Detection[] }
-  | { blocked: true; entities: Detection[] };
+  | { blocked: true; blocked_by: Detection[]; entities: Detection[] };
 ```
 
-#### Filtering the result
-
-Nothing is configured on the way in: everything is always detected and the output is filtered. That way you never leave an ID number in plain text because you filtered too much.
+Each detection also carries `dataClass`, `identifiability` and `score`, so anything the options do not cover can be done on the output of `scan()`:
 
 ```ts
-const { entities } = new Nerium().text(document, true);
+const detections = new Nerium().scan(document);
 
-entities.filter((d) => d.kind === 'BANK_ACCOUNT');
-entities.filter((d) => d.dataClass === 'HEALTH');
-entities.filter((d) => d.identifiability === 'DIRECT');
-entities.filter((d) => d.country === 'ES');
-entities.filter((d) => d.score === 1);
+detections.filter((d) => d.dataClass === 'HEALTH');
+detections.filter((d) => d.identifiability === 'DIRECT');
+detections.filter((d) => d.score === 1);
 ```
 
 ### What it supports
@@ -249,7 +281,7 @@ bun run manual      # the scenarios in tests/
 bun run build       # ESM + CJS dist + types
 ```
 
-The tests are manual scripts that print JSON, in the style of `@axium-lab/docxium`. `tests/methods/documents.ts` is the only one that **checks** anything: it runs a sample document per country and fails if any expected entity is missing. `bun tests/manual.test.ts` prints what `supported_entities()`, `supported_countries()` and `supported_kinds()` return.
+The tests are manual scripts that print JSON, in the style of `@axium-lab/docxium`. Two of them **check** something and exit non-zero on failure: `tests/methods/documents.ts` runs a sample document per country and fails if any expected entity is missing, and `tests/methods/options.ts` checks the selection and policy rules. `bun tests/manual.test.ts` prints what `supported_entities()`, `supported_countries()` and `supported_kinds()` return.
 
 Each country has its document in `tests/fixtures/xx_document.ts` (the global ones in `global_document.ts`), with every identifier's checksum computed. The prose is in Spanish but the labels are in the local language, because context words are local and without them the low-score entities never reach the threshold.
 

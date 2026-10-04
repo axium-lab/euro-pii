@@ -135,12 +135,52 @@ export interface Detection {
   confirmedBy: 'checksum' | 'context' | null;
 }
 
+/** What `text()` does with a detection. */
+export type Action = 'mask' | 'block' | 'keep';
+
+/**
+ * Which entities to look for. Leaving a field out does not restrict by it.
+ *
+ * The fields intersect: an entity is looked for only if it matches every field
+ * present. `except` then removes names from whatever is left. A selection that
+ * ends up empty throws, so a typo cannot quietly turn detection off.
+ *
+ * `GLOBAL` is a country like any other: `countries: ['ES']` leaves out IBAN,
+ * email and cards, which are `GLOBAL`.
+ */
+export interface Selection {
+  countries?: readonly Country[];
+  kinds?: readonly Kind[];
+  entities?: readonly EntityName[];
+  except?: readonly EntityName[];
+}
+
+/**
+ * What to do with each detection. The most specific key wins: `entities`, then
+ * `kinds`, then `default`, which is `'mask'` when left out.
+ *
+ * A `'block'` written in `entities` or `kinds` is looked for even when the
+ * selection leaves it out, so narrowing the selection can never switch a block
+ * off. Putting that same entity in `except` throws. A `'block'` that only comes
+ * from `default` stays within the selection.
+ */
+export interface Policy {
+  default?: Action;
+  kinds?: Partial<Record<Kind, Action>>;
+  entities?: Partial<Record<EntityName, Action>>;
+}
+
+export interface TextOptions extends Selection {
+  policy?: Policy;
+}
+
 export type ScanResult =
   | { blocked: false; anonymized_text: string; entities: Detection[] }
-  | { blocked: true; entities: Detection[] };
+  | { blocked: true; blocked_by: Detection[]; entities: Detection[] };
 
 export interface Methods {
-  text: (text: string, anonymizes: boolean) => ScanResult;
+  scan: (text: string, selection?: Selection) => Detection[];
+  text: (text: string, options?: TextOptions) => ScanResult;
   supported_entities: () => Entity[];
   supported_countries: () => Record<Country, EntityName[]>;
   supported_kinds: () => Partial<Record<Kind, EntityName[]>>;

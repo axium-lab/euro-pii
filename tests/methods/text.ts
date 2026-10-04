@@ -23,18 +23,18 @@ const scenarios = {
 
 for (const [name, text] of Object.entries(scenarios)) {
   console.log(`\n── ${name}`);
-  console.log(JSON.stringify(ner.text(text, true), null, 2));
+  console.log(JSON.stringify(ner.text(text), null, 2));
 }
 
-// `anonymizes = false` blocks when there are DETECTIONS, and the blocked result
+// `default: 'block'` blocks when there are DETECTIONS, and the blocked result
 // carries no text. Do not read "no detections" as "no personal data":
 // NO_IDENTIFIERS contains "Pedro Losas", which is textbook PII, but PERSON needs
 // a model and this library has none. `blocked: false` means "I found nothing I
 // know how to look for", not "this text is safe".
-// console.log('\n── with detections, anonymizes = false -> blocks');
+// console.log('\n── with detections, block -> blocks');
 // console.log(
-//   JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, false), null, 2),
+//   JSON.stringify(ner.text(EXAMPLE_TEXT_ALL_ES_ENTITIES, { policy: { default: 'block' } }), null, 2),
 // );
 
-// console.log('\n── without detections, anonymizes = false -> does NOT block');
-// console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, false), null, 2));
+// console.log('\n── without detections, block -> does NOT block');
+// console.log(JSON.stringify(ner.text(NO_IDENTIFIERS, { policy: { default: 'block' } }), null, 2));

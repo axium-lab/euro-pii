@@ -1,3 +1,4 @@
+import { actionOf, plan, select } from './core/options';
 import { escapeRegex, sanitize } from './core/sanitize';
 import type {
   Country,
@@ -7,6 +8,8 @@ import type {
   Kind,
   Methods,
   ScanResult,
+  Selection,
+  TextOptions,
 } from './core/types';
 import { CATALOG, REGISTRY } from './entities';
 
@@ -28,16 +31,32 @@ const CONTEXT_WINDOW_CHARS = 40;
 const placeholder = (detection: Detection) => `<${detection.entity}>`;
 
 export class Nerium implements Methods {
-  text(text: string, anonymizes: boolean): ScanResult {
-    const entities = detect(text);
+  /** Detects only, and leaves the decision to the caller. */
+  scan(text: string, selection?: Selection): Detection[] {
+    return detect(text, select(selection));
+  }
 
-    if (!anonymizes && entities.length > 0) {
-      return { blocked: true, entities };
+  /**
+   * Detects and applies the policy. Any detection whose action is `'block'`
+   * blocks the whole text, and the result then carries no text at all.
+   */
+  text(text: string, options: TextOptions = {}): ScanResult {
+    const policy = options.policy ?? {};
+    const entities = detect(text, plan(options));
+    const actionFor = (detection: Detection) =>
+      actionOf(policy, detection.entity, detection.kind);
+
+    const blocked_by = entities.filter((d) => actionFor(d) === 'block');
+    if (blocked_by.length > 0) {
+      return { blocked: true, blocked_by, entities };
     }
 
     return {
       blocked: false,
-      anonymized_text: mask(text, entities),
+      anonymized_text: mask(
+        text,
+        entities.filter((d) => actionFor(d) === 'mask'),
+      ),
       entities,
     };
   }
@@ -78,11 +97,15 @@ export class Nerium implements Methods {
  * building the RegExp inside the call makes the classic `lastIndex` bug
  * impossible: a shared RegExp carrying `g` remembers where it stopped, so the
  * second call would quietly return fewer matches than the first.
+ *
+ * Only `entities` run, which is why the selection happens before detecting and
+ * not by filtering the output: an entity left out could otherwise win an
+ * overlap and take a wanted detection down with it.
  */
-function detect(text: string): Detection[] {
+function detect(text: string, entities: readonly Entity[]): Detection[] {
   const found: Detection[] = [];
 
-  for (const entity of REGISTRY) {
+  for (const entity of entities) {
     for (const pattern of entity.patterns) {
       const regex = new RegExp(
         pattern.regex,

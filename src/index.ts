@@ -9,6 +9,7 @@ export {
 
 export type { NeriumErrorCategory, NeriumErrorParams } from './core/errors';
 export type {
+  Action,
   Country,
   DataClass,
   Detection,
@@ -19,6 +20,9 @@ export type {
   Kind,
   Methods,
   Pattern,
+  Policy,
   ScanResult,
+  Selection,
+  TextOptions,
   Validation,
 } from './core/types';
