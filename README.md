@@ -3,7 +3,7 @@
 Detect and anonymize personal data in European text, **without machine learning**: regular expressions, checksums and context words. It is deterministic, has zero runtime dependencies and runs anywhere JavaScript does.
 
 ```ts
-import { EuroPii } from 'euro-pii';
+import { EuroPii } from '@axium-lab/euro-pii';
 
 new EuroPii().anonymize('El titular con DNI 12345678-Z firma el contrato.').anonymized_text;
 // 'El titular con DNI <ES_NIF> firma el contrato.'
@@ -35,11 +35,11 @@ new EuroPii().anonymize('El titular con DNI 12345678-Z firma el contrato.').anon
 ## Installation
 
 ```bash
-npm install euro-pii
+npm install @axium-lab/euro-pii
 # or
-pnpm add euro-pii
+pnpm add @axium-lab/euro-pii
 # or
-bun add euro-pii
+bun add @axium-lab/euro-pii
 ```
 
 Requires Node.js 22 or later. There is nothing to configure: `new EuroPii()` takes no options.
@@ -56,7 +56,7 @@ Requires Node.js 22 or later. There is nothing to configure: `new EuroPii()` tak
 ### Detecting: `scan()`
 
 ```ts
-import { EuroPii } from 'euro-pii';
+import { EuroPii } from '@axium-lab/euro-pii';
 
 const ner = new EuroPii();
 
@@ -251,7 +251,7 @@ Invalid options throw a `EuroPiiError` with a `category`:
 A kind that exists in the `Kind` type but no entity uses (`PHONE`) counts as unknown.
 
 ```ts
-import { isEuroPiiError } from 'euro-pii';
+import { isEuroPiiError } from '@axium-lab/euro-pii';
 
 try {
   ner.anonymize(document, { countries: ['ES'], entities: ['DE_TAX_ID'] });

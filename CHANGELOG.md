@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-05
+
+### Changed
+
+- The package is now published under the `@axium-lab` scope: install it as `@axium-lab/euro-pii`.
+
 ## [1.0.0] - 2026-10-04
 
 First public release.
@@ -24,5 +30,6 @@ First public release.
 - Typed end to end: entity names, countries and kinds are literal unions.
 - ESM and CommonJS builds with TypeScript declarations. Zero runtime dependencies. Requires Node.js 22 or later.
 
-[Unreleased]: https://github.com/axium-lab/euro-pii/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/axium-lab/euro-pii/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/axium-lab/euro-pii/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/axium-lab/euro-pii/releases/tag/v1.0.0
