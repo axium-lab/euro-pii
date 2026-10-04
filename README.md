@@ -15,8 +15,6 @@ new EuroPii().anonymize('El titular con DNI 12345678-Z firma el contrato.').anon
 - **Typed end to end.** Entity names, countries and kinds are literal unions, so a typo fails at compile time.
 - ESM and CommonJS, with TypeScript declarations included.
 
-> **Pre-1.0.** The API may still change between minor versions.
-
 ## Contents
 
 - [Installation](#installation)
