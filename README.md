@@ -326,6 +326,40 @@ Types: `Action`, `AnonymizeOptions`, `AnonymizeResult`, `Country`, `DataClass`, 
 
 61 entities, 96 patterns, 18 kinds. **Validation** is what confirms a match beyond its shape: a `checksum` raises it to certainty, a `filter` can only reject impossible values (an all-zero MAC, the nil UUID).
 
+### European Union coverage
+
+11 of the 27 member states are supported. The multi-country entities (IBAN, cards, email…) apply to all of them. The United Kingdom (`GB`, 6 entities) is supported too, but it is not an EU member.
+
+| Country     | Code | Status       | Entities |
+| ----------- | ---- | ------------ | -------- |
+| Austria     | `AT` | ✅ Supported | 3        |
+| Belgium     | `BE` | ✅ Supported | 4        |
+| Finland     | `FI` | ✅ Supported | 1        |
+| France      | `FR` | ✅ Supported | 4        |
+| Germany     | `DE` | ✅ Supported | 13       |
+| Italy       | `IT` | ✅ Supported | 5        |
+| Netherlands | `NL` | ✅ Supported | 3        |
+| Poland      | `PL` | ✅ Supported | 1        |
+| Portugal    | `PT` | ✅ Supported | 3        |
+| Spain       | `ES` | ✅ Supported | 8        |
+| Sweden      | `SE` | ✅ Supported | 2        |
+| Bulgaria    | `BG` | 🔜 Soon      | –        |
+| Croatia     | `HR` | 🔜 Soon      | –        |
+| Cyprus      | `CY` | 🔜 Soon      | –        |
+| Czechia     | `CZ` | 🔜 Soon      | –        |
+| Denmark     | `DK` | 🔜 Soon      | –        |
+| Estonia     | `EE` | 🔜 Soon      | –        |
+| Greece      | `GR` | 🔜 Soon      | –        |
+| Hungary     | `HU` | 🔜 Soon      | –        |
+| Ireland     | `IE` | 🔜 Soon      | –        |
+| Latvia      | `LV` | 🔜 Soon      | –        |
+| Lithuania   | `LT` | 🔜 Soon      | –        |
+| Luxembourg  | `LU` | 🔜 Soon      | –        |
+| Malta       | `MT` | 🔜 Soon      | –        |
+| Romania     | `RO` | 🔜 Soon      | –        |
+| Slovakia    | `SK` | 🔜 Soon      | –        |
+| Slovenia    | `SI` | 🔜 Soon      | –        |
+
 ### Multi-country (`GLOBAL`)
 
 | Entity          | Kind           | Validation | Description                            |
