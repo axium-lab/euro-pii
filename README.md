@@ -1,12 +1,33 @@
-# euro-pii
+# @axium-lab/euro-pii
+
+[![npm version](https://img.shields.io/npm/v/@axium-lab/euro-pii)](https://www.npmjs.com/package/@axium-lab/euro-pii)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Detect and anonymize personal data in European text, **without machine learning**: regular expressions, checksums and context words. It is deterministic, has zero runtime dependencies and runs anywhere JavaScript does.
+
+```bash
+npm install @axium-lab/euro-pii
+```
 
 ```ts
 import { EuroPii } from '@axium-lab/euro-pii';
 
-new EuroPii().anonymize('El titular con DNI 12345678-Z firma el contrato.').anonymized_text;
-// 'El titular con DNI <ES_NIF> firma el contrato.'
+const result = new EuroPii().anonymize(
+  'The holder, with DNI 12345678-Z and email ana@example.com, pays by direct debit to ES91 2100 0418 4502 0005 1332.',
+  {
+    countries: ['ES', 'GLOBAL'], // Spanish identifiers plus IBAN, cards, email…
+    except: ['DATE_TIME'],       // but not dates
+    policy: {
+      default: 'mask', // 'mask' | 'keep' | 'block'
+      kinds: { PAYMENT_CARD: 'block' },
+    },
+  },
+);
+
+if (!result.blocked) {
+  result.anonymized_text;
+  // 'The holder, with DNI <ES_NIF> and email <EMAIL_ADDRESS>, pays by direct debit to <IBAN_CODE>.'
+}
 ```
 
 - **61 entities**: 8 multi-country ones (IBAN, cards, email, IP…) and 53 national identifiers from Spain, Germany, the United Kingdom, Italy, Sweden, Finland, Poland, France, the Netherlands, Portugal, Belgium and Austria.
@@ -60,7 +81,7 @@ import { EuroPii } from '@axium-lab/euro-pii';
 
 const ner = new EuroPii();
 
-ner.scan('Mi DNI es 12345678Z y mi correo luis@example.com');
+ner.scan('My DNI is 12345678Z and my email is luis@example.com');
 ```
 
 ```json
@@ -84,8 +105,8 @@ ner.scan('Mi DNI es 12345678Z y mi correo luis@example.com');
     "dataClass": "PERSONAL",
     "identifiability": "DIRECT",
     "country": "GLOBAL",
-    "start": 32,
-    "end": 48,
+    "start": 36,
+    "end": 52,
     "score": 0.85,
     "value": "luis@example.com",
     "pattern": "email",
@@ -114,13 +135,13 @@ Detections never overlap, and come sorted by position.
 ### Anonymizing: `anonymize()`
 
 ```ts
-ner.anonymize('Mi DNI es 12345678Z y mi correo luis@example.com');
+ner.anonymize('My DNI is 12345678Z and my email is luis@example.com');
 ```
 
 ```json
 {
   "blocked": false,
-  "anonymized_text": "Mi DNI es <ES_NIF> y mi correo <EMAIL_ADDRESS>",
+  "anonymized_text": "My DNI is <ES_NIF> and my email is <EMAIL_ADDRESS>",
   "entities": [ ... ]
 }
 ```
@@ -512,7 +533,7 @@ Worth knowing:
 
 What euro-pii does **not** detect matters as much as what it does:
 
-- **Names, addresses and company names.** A name has no shape a regex can recognise; detecting it needs a language model. In `El titular Pedro Losas con DNI <ES_NIF>`, the name stays in plain text.
+- **Names, addresses and company names.** A name has no shape a regex can recognise; detecting it needs a language model. In `The holder Pedro Losas, with DNI <ES_NIF>`, the name stays in plain text.
 - **Phone numbers.** Reliable detection needs a numbering-plan library, not a regex.
 - **URLs.** A correct pattern needs the full list of top-level domains.
 - **Countries outside the list above.** A Danish or Greek national ID is only caught if it happens to match a multi-country entity.
