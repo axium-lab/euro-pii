@@ -67,7 +67,12 @@ export type Country =
   | 'IT'
   | 'SE'
   | 'FI'
-  | 'PL';
+  | 'PL'
+  | 'FR'
+  | 'NL'
+  | 'PT'
+  | 'BE'
+  | 'AT';
 
 /** `true` = confirmed · `false` = rejected · `null` = cannot be decided. */
 export type Validation = true | false | null;

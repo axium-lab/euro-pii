@@ -1,9 +1,14 @@
 import type { Country, Entity } from '../core/types';
+import { AUSTRIA } from './austria';
+import { BELGIUM } from './belgium';
 import { FINLAND } from './finland';
+import { FRANCE } from './france';
 import { GERMANY } from './germany';
 import { GLOBAL } from './global';
 import { ITALY } from './italy';
+import { NETHERLANDS } from './netherlands';
 import { POLAND } from './poland';
+import { PORTUGAL } from './portugal';
 import { SPAIN } from './spain';
 import { SWEDEN } from './sweden';
 import { UNITED_KINGDOM } from './united-kingdom';
@@ -18,7 +23,9 @@ import { UNITED_KINGDOM } from './united-kingdom';
  *
  * European scope: the multi-country entities plus Spain, Germany, the United
  * Kingdom, Italy, Sweden, Finland and Poland — the seven countries the source
- * document covers. Two entities of that scope are left out on purpose:
+ * document covers — and France, the Netherlands, Portugal, Belgium and
+ * Austria, limited to the identifiers that cannot be confused with another
+ * entity. Two entities of the original scope are left out on purpose:
  * - `URL`, whose real pattern is an alternation of over 600 hand-written TLDs,
  *   ~8 KB on one line, incomplete by construction and with duplicates.
  * - `PHONE_NUMBER`, which upstream does not detect with a regex: it delegates
@@ -33,9 +40,14 @@ const ENTITIES = [
   ...SWEDEN,
   ...FINLAND,
   ...POLAND,
+  ...FRANCE,
+  ...NETHERLANDS,
+  ...PORTUGAL,
+  ...BELGIUM,
+  ...AUSTRIA,
 ] as const;
 
-/** Derived from the definitions: the union of the 44 names, not `string`. */
+/** Derived from the definitions: the union of every name, not `string`. */
 export type EntityName = (typeof ENTITIES)[number]['name'];
 
 export const REGISTRY: readonly Entity[] = ENTITIES;
@@ -45,7 +57,7 @@ export const BY_NAME = Object.fromEntries(
   REGISTRY.map((entity) => [entity.name, entity]),
 ) as Record<EntityName, Entity>;
 
-/** The 44 names in registry order. */
+/** Every name, in registry order. */
 export const ENTITY_NAMES: readonly EntityName[] = REGISTRY.map(
   (entity) => entity.name,
 );
@@ -68,4 +80,9 @@ export const CATALOG: Record<Country, readonly EntityName[]> = {
   SE: namesOf('SE'),
   FI: namesOf('FI'),
   PL: namesOf('PL'),
+  FR: namesOf('FR'),
+  NL: namesOf('NL'),
+  PT: namesOf('PT'),
+  BE: namesOf('BE'),
+  AT: namesOf('AT'),
 };

@@ -9,8 +9,8 @@ new Nerium().anonymize('El titular con DNI 12345678-Z firma el contrato.').anony
 // 'El titular con DNI <ES_NIF> firma el contrato.'
 ```
 
-- **44 entities**: 8 multi-country ones (IBAN, cards, email, IP…) and 36 national identifiers from Spain, Germany, the United Kingdom, Italy, Sweden, Finland and Poland.
-- **Checksums, not just shapes.** 23 entities are confirmed arithmetically (NIF letter, IBAN mod 97, Luhn…), so a match that passes is almost certainly real.
+- **61 entities**: 8 multi-country ones (IBAN, cards, email, IP…) and 53 national identifiers from Spain, Germany, the United Kingdom, Italy, Sweden, Finland, Poland, France, the Netherlands, Portugal, Belgium and Austria.
+- **Checksums, not just shapes.** 34 entities are confirmed arithmetically (NIF letter, IBAN mod 97, Luhn…), so a match that passes is almost certainly real.
 - **You choose what to look for and what to do with it**: filter by country, kind or name, then mask, keep or block per entity.
 - **Typed end to end.** Entity names, countries and kinds are literal unions, so a typo fails at compile time.
 - ESM and CommonJS, with TypeScript declarations included.
@@ -279,7 +279,7 @@ With TypeScript most of these never get past the compiler. The runtime checks ar
 
 ```ts
 ner.supported_countries();
-// { GLOBAL: ['CREDIT_CARD', 'CRYPTO', ...], ES: ['ES_NIF', 'ES_NIE', ...], ..., PL: ['PL_PESEL'] }
+// { GLOBAL: ['CREDIT_CARD', 'CRYPTO', ...], ES: ['ES_NIF', 'ES_NIE', ...], ..., AT: ['AT_SOCIAL_SECURITY', 'AT_VAT_ID', 'AT_FIRMENBUCH'] }
 
 ner.supported_kinds();
 // { BANK_ACCOUNT: ['IBAN_CODE', 'ES_CCC'], COMPANY_ID: [...], ... }
@@ -324,7 +324,7 @@ Types: `Action`, `AnonymizeOptions`, `AnonymizeResult`, `Country`, `DataClass`, 
 
 ## Supported entities
 
-44 entities, 78 patterns, 18 kinds. **Validation** is what confirms a match beyond its shape: a `checksum` raises it to certainty, a `filter` can only reject impossible values (an all-zero MAC, the nil UUID).
+61 entities, 96 patterns, 18 kinds. **Validation** is what confirms a match beyond its shape: a `checksum` raises it to certainty, a `filter` can only reject impossible values (an all-zero MAC, the nil UUID).
 
 ### Multi-country (`GLOBAL`)
 
@@ -402,13 +402,45 @@ Entity prefixes are ISO country codes, so British entities are `GB_*`. Presidio 
 | `FI_PERSONAL_IDENTITY_CODE` | `NATIONAL_ID` | checksum   | Personal identity code         |
 | `PL_PESEL`                  | `NATIONAL_ID` | checksum   | National identification number |
 
+### France (`FR`)
+
+| Entity             | Kind              | Validation | Description                       |
+| ------------------ | ----------------- | ---------- | --------------------------------- |
+| `FR_NIR`           | `SOCIAL_SECURITY` | checksum   | Social security number (NIR)      |
+| `FR_VAT_ID`        | `VAT_ID`          | checksum   | VAT identification number         |
+| `FR_PASSPORT`      | `PASSPORT`        | –          | Passport number                   |
+| `FR_VEHICLE_PLATE` | `VEHICLE_PLATE`   | –          | Vehicle registration plate (SIV)  |
+
+### Netherlands (`NL`), Portugal (`PT`)
+
+| Entity             | Kind            | Validation | Description                         |
+| ------------------ | --------------- | ---------- | ----------------------------------- |
+| `NL_VAT_ID`        | `VAT_ID`        | checksum   | VAT identification number (btw-id)  |
+| `NL_POSTCODE`      | `POSTAL_CODE`   | –          | Postcode                            |
+| `NL_VEHICLE_PLATE` | `VEHICLE_PLATE` | –          | Vehicle registration plate          |
+| `PT_CITIZEN_CARD`  | `NATIONAL_ID`   | checksum   | Citizen card number                 |
+| `PT_POSTAL_CODE`   | `POSTAL_CODE`   | –          | Postal code                         |
+| `PT_VEHICLE_PLATE` | `VEHICLE_PLATE` | –          | Vehicle registration plate          |
+
+### Belgium (`BE`), Austria (`AT`)
+
+| Entity               | Kind              | Validation | Description                         |
+| -------------------- | ----------------- | ---------- | ----------------------------------- |
+| `BE_NATIONAL_NUMBER` | `NATIONAL_ID`     | checksum   | National register number            |
+| `BE_EID_CARD`        | `NATIONAL_ID`     | checksum   | Identity card number                |
+| `BE_COMPANY_ID`      | `COMPANY_ID`      | checksum   | Enterprise number (KBO/BCE)         |
+| `BE_VAT_ID`          | `VAT_ID`          | checksum   | VAT identification number           |
+| `AT_SOCIAL_SECURITY` | `SOCIAL_SECURITY` | checksum   | Social security number              |
+| `AT_VAT_ID`          | `VAT_ID`          | checksum   | VAT identification number (UID)     |
+| `AT_FIRMENBUCH`      | `COMPANY_ID`      | checksum   | Company register number             |
+
 ### Classification
 
 Every entity, and every detection, carries four classifications:
 
 | Field             | Answers                                | Values                                                           |
 | ----------------- | -------------------------------------- | ---------------------------------------------------------------- |
-| `country`         | Who issues it?                         | `GLOBAL` `ES` `DE` `GB` `IT` `SE` `FI` `PL`                      |
+| `country`         | Who issues it?                         | `GLOBAL` `ES` `DE` `GB` `IT` `SE` `FI` `PL` `FR` `NL` `PT` `BE` `AT` |
 | `kind`            | What is it, whatever the country?      | `TAX_ID` `PASSPORT` `DRIVER_LICENCE` `BANK_ACCOUNT`… (18 in use) |
 | `dataClass`       | What sort of sensitive data is it?     | `PERSONAL` `FINANCIAL` `HEALTH` `TECHNICAL` `CORPORATE`          |
 | `identifiability` | Does it identify someone on its own?   | `DIRECT` `QUASI`                                                 |
@@ -417,13 +449,13 @@ Every entity, and every detection, carries four classifications:
 
 `dataClass`:
 
-- **`PERSONAL` (28)**: identifies or describes a natural person. The GDPR default.
+- **`PERSONAL` (40)**: identifies or describes a natural person. The GDPR default.
 - **`FINANCIAL` (4)**: `CREDIT_CARD`, `CRYPTO`, `IBAN_CODE`, `ES_CCC`.
 - **`HEALTH` (4)**: `DE_BSNR`, `DE_LANR`, `DE_HEALTH_INSURANCE`, `GB_NHS`. A special category under GDPR art. 9.
 - **`TECHNICAL` (3)**: `IP_ADDRESS`, `MAC_ADDRESS`, `UUID`.
-- **`CORPORATE` (5)**: `ES_CIF`, `DE_VAT_ID`, `DE_HANDELSREGISTER`, `IT_VAT_CODE`, `SE_ORGANISATIONSNUMMER`. They identify companies and are usually not personal data.
+- **`CORPORATE` (10)**: `ES_CIF`, `DE_VAT_ID`, `DE_HANDELSREGISTER`, `IT_VAT_CODE`, `SE_ORGANISATIONSNUMMER`, `FR_VAT_ID`, `BE_COMPANY_ID`, `BE_VAT_ID`, `AT_VAT_ID`, `AT_FIRMENBUCH`. They identify companies and are usually not personal data.
 
-`identifiability`: only `DATE_TIME`, `DE_PLZ` and `GB_POSTCODE` are `QUASI`. None identifies anyone alone, but a postcode plus a birth date often does.
+`identifiability`: only `DATE_TIME`, `DE_PLZ`, `GB_POSTCODE`, `NL_POSTCODE` and `PT_POSTAL_CODE` are `QUASI`. None identifies anyone alone, but a postcode plus a birth date often does.
 
 When an entity could fall either way, it takes the more protective classification: `info@company.com` is not personal, but a regex cannot tell it from a person's address, so `EMAIL_ADDRESS` is `PERSONAL`.
 
@@ -451,7 +483,8 @@ What nerium does **not** detect matters as much as what it does:
 - **Names, addresses and company names.** A name has no shape a regex can recognise; detecting it needs a language model. In `El titular Pedro Losas con DNI <ES_NIF>`, the name stays in plain text.
 - **Phone numbers.** Reliable detection needs a numbering-plan library, not a regex.
 - **URLs.** A correct pattern needs the full list of top-level domains.
-- **Countries outside the list above.** A French or Dutch national ID is only caught if it happens to match a multi-country entity.
+- **Countries outside the list above.** A Danish or Greek national ID is only caught if it happens to match a multi-country entity.
+- **Bare numbers from France, the Netherlands, Portugal, Belgium and Austria.** Their identifiers are only covered where they cannot be confused with another entity. Plain digit runs (the SIREN, the BSN, the Portuguese NIF) are left out, and the Belgian national number, Belgian enterprise number, Austrian social security number and French NIR are only found in their grouped form (`85.07.30-033.28`, not `85073003328`).
 
 So `blocked: false`, or an empty `scan()`, means "nothing I know how to look for", **not** "this text contains no personal data". Use nerium as one layer of a pipeline, not as the guarantee.
 

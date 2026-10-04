@@ -8,26 +8,36 @@
  *
  * Todos los identificadores tienen su checksum VERIFICADO, ninguno es inventado.
  */
+import { AT_EXPECTED, EXAMPLE_TEXT_ALL_AT_ENTITIES } from './at_document';
+import { BE_EXPECTED, EXAMPLE_TEXT_ALL_BE_ENTITIES } from './be_document';
 import { DE_EXPECTED, EXAMPLE_TEXT_ALL_DE_ENTITIES } from './de_document';
 import { ES_EXPECTED, EXAMPLE_TEXT_ALL_ES_ENTITIES } from './es_document';
 import { GLOBAL_EXPECTED, EXAMPLE_TEXT_ALL_GLOBAL_ENTITIES } from './global_document';
 import { FI_EXPECTED, EXAMPLE_TEXT_ALL_FI_ENTITIES } from './fi_document';
 import { GB_EXPECTED, EXAMPLE_TEXT_ALL_GB_ENTITIES } from './gb_document';
+import { FR_EXPECTED, EXAMPLE_TEXT_ALL_FR_ENTITIES } from './fr_document';
 import { IT_EXPECTED, EXAMPLE_TEXT_ALL_IT_ENTITIES } from './it_document';
+import { NL_EXPECTED, EXAMPLE_TEXT_ALL_NL_ENTITIES } from './nl_document';
 import { PL_EXPECTED, EXAMPLE_TEXT_ALL_PL_ENTITIES } from './pl_document';
+import { PT_EXPECTED, EXAMPLE_TEXT_ALL_PT_ENTITIES } from './pt_document';
 import { SE_EXPECTED, EXAMPLE_TEXT_ALL_SE_ENTITIES } from './se_document';
 
+export * from './at_document';
+export * from './be_document';
 export * from './de_document';
 export * from './es_document';
 export * from './es_formats';
 export * from './global_document';
 export * from './fi_document';
 export * from './gb_document';
+export * from './fr_document';
 export * from './it_document';
+export * from './nl_document';
 export * from './pl_document';
+export * from './pt_document';
 export * from './se_document';
 
-/** Los ocho documentos con lo que cada uno deberia sacar. */
+/** Los trece documentos con lo que cada uno deberia sacar. */
 export const DOCUMENTS = {
   GLOBAL: { text: EXAMPLE_TEXT_ALL_GLOBAL_ENTITIES, expected: GLOBAL_EXPECTED },
   ES: { text: EXAMPLE_TEXT_ALL_ES_ENTITIES, expected: ES_EXPECTED },
@@ -37,9 +47,14 @@ export const DOCUMENTS = {
   SE: { text: EXAMPLE_TEXT_ALL_SE_ENTITIES, expected: SE_EXPECTED },
   FI: { text: EXAMPLE_TEXT_ALL_FI_ENTITIES, expected: FI_EXPECTED },
   PL: { text: EXAMPLE_TEXT_ALL_PL_ENTITIES, expected: PL_EXPECTED },
+  FR: { text: EXAMPLE_TEXT_ALL_FR_ENTITIES, expected: FR_EXPECTED },
+  NL: { text: EXAMPLE_TEXT_ALL_NL_ENTITIES, expected: NL_EXPECTED },
+  PT: { text: EXAMPLE_TEXT_ALL_PT_ENTITIES, expected: PT_EXPECTED },
+  BE: { text: EXAMPLE_TEXT_ALL_BE_ENTITIES, expected: BE_EXPECTED },
+  AT: { text: EXAMPLE_TEXT_ALL_AT_ENTITIES, expected: AT_EXPECTED },
 } as const;
 
-/** Los ocho seguidos. Ojo: aqui las colisiones entre paises SI se pisan. */
+/** Todos seguidos. Ojo: aqui las colisiones entre paises SI se pisan. */
 export const EXAMPLE_TEXT_ALL_ENTITIES = Object.values(DOCUMENTS)
   .map((document) => document.text)
   .join('\n\n---\n\n');
