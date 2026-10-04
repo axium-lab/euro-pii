@@ -1,10 +1,12 @@
 import { defineEntity } from '../../core/entity';
+import { DASH, SPACE } from '../../core/separators';
 import { nussValid } from './checksums';
 
 /**
  * Twelve digits alone look like anything, so the regex pins the province to
  * 01-53 and the base score stays at 0.3: below the threshold until the
- * checksum or a context word backs it.
+ * checksum or a context word backs it. Both gaps are the same separator, as
+ * in `ES_CCC`.
  */
 export const ES_NUSS = defineEntity({
   // ── Classification ──────────────────────────
@@ -19,7 +21,7 @@ export const ES_NUSS = defineEntity({
   patterns: [
     {
       name: 'nuss',
-      regex: String.raw`\b(?:0[1-9]|[1-4][0-9]|5[0-3])[\s/-]?[0-9]{8}[\s/-]?[0-9]{2}\b`,
+      regex: String.raw`\b(?:0[1-9]|[1-4][0-9]|5[0-3])(${SPACE}|${DASH}|/)?[0-9]{8}\1[0-9]{2}\b`,
       score: 0.3,
     },
   ],

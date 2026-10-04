@@ -1,4 +1,5 @@
 import { defineEntity } from '../../core/entity';
+import { DASH, SPACE } from '../../core/separators';
 
 /** Provincial codes of the plates issued until September 2000. */
 const PROVINCES = [
@@ -28,13 +29,13 @@ export const ES_VEHICLE_PLATE = defineEntity({
   patterns: [
     {
       name: 'current',
-      regex: String.raw`\b[0-9]{4}[\s-]?[BCDFGHJKLMNPRSTVWXYZ]{3}\b`,
+      regex: String.raw`\b[0-9]{4}(?:${SPACE}|${DASH})?[BCDFGHJKLMNPRSTVWXYZ]{3}\b`,
       score: 0.3,
       caseSensitive: true,
     },
     {
       name: 'provincial',
-      regex: String.raw`\b(?:${PROVINCES})[\s-]?[0-9]{4}[\s-]?[A-Z]{1,2}\b`,
+      regex: String.raw`\b(?:${PROVINCES})(${SPACE}|${DASH})?[0-9]{4}\1[A-Z]{1,2}\b`,
       score: 0.2,
       caseSensitive: true,
     },

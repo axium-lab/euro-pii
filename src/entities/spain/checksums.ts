@@ -1,11 +1,23 @@
-import { sanitize } from '../../core/sanitize';
+import { DASH } from '../../core/separators';
 import type { Validation } from '../../core/types';
 
-const CONTROL = 'TRWAGMYFPDXBNJZSQVHLCKE';
+/** Check letters of a NIF and a NIE, indexed by the number mod 23. */
+export const CONTROL = 'TRWAGMYFPDXBNJZSQVHLCKE';
+
+const SEPARATORS = new RegExp(String.raw`\s|[./]|${DASH}`, 'g');
+
+/**
+ * Removes every separator the Spanish patterns accept between groups. Wider
+ * than `sanitize`, which keeps dots and typographic dashes: `12.345.678-Z`
+ * reaches the checksum as `12345678Z`, not as `12.345.678Z`.
+ */
+function strip(raw: string): string {
+  return raw.replace(SEPARATORS, '');
+}
 
 /** Check letter of a NIF: CONTROL[digits % 23]. */
 export function nifValid(raw: string): Validation {
-  const text = sanitize(raw).toUpperCase();
+  const text = strip(raw).toUpperCase();
   const digits = text.replace(/[^0-9]/g, '');
 
   if (digits === '') return false;
@@ -15,11 +27,11 @@ export function nifValid(raw: string): Validation {
 
 /** Same maths as the NIF once the prefix becomes a digit: X -> 0, Y -> 1, Z -> 2. */
 export function nieValid(raw: string): Validation {
-  const text = sanitize(raw).toUpperCase();
+  const text = strip(raw).toUpperCase();
   const prefix = text[0];
 
   if (prefix === undefined || !'XYZ'.includes(prefix)) return false;
-  if (text.length < 8 || text.length > 9) return false;
+  if (text.length < 9 || text.length > 10) return false;
   if (!/^[0-9]+$/.test(text.slice(1, -1))) return false;
 
   const digits = Number(String('XYZ'.indexOf(prefix)) + text.slice(1, -1));
@@ -40,7 +52,7 @@ const CIF_DIGIT_CONTROL = 'ABEH';
  * itself or as 'JABCDEFGHI'[control].
  */
 export function cifValid(raw: string): Validation {
-  const text = sanitize(raw).toUpperCase();
+  const text = strip(raw).toUpperCase();
 
   if (!/^[ABCDEFGHJNPQRSUVW][0-9]{7}[0-9A-J]$/.test(text)) return false;
 
@@ -72,7 +84,7 @@ export function cifValid(raw: string): Validation {
  * which of the three checksums applies.
  */
 export function vatValid(raw: string): Validation {
-  const text = sanitize(raw).toUpperCase().replace(/^ES/, '');
+  const text = strip(raw).toUpperCase().replace(/^ES/, '');
   const first = text[0] ?? '';
 
   if (/[0-9]/.test(first)) return nifValid(text);
@@ -86,8 +98,7 @@ export function vatValid(raw: string): Validation {
  * province followed by the number, except that a number below 10,000,000 is
  * glued to the province without its leading zero.
  *
- * Takes the raw match: the NUSS is usually written `28/12345678/40`, and
- * `sanitize` does not strip slashes.
+ * Takes the raw match and keeps only its digits, whatever separates them.
  */
 export function nussValid(raw: string): Validation {
   const digits = raw.replace(/[^0-9]/g, '');
@@ -125,7 +136,7 @@ function cccControl(digits: string): number {
  * covers bank and branch, the second one the account.
  */
 export function cccValid(raw: string): Validation {
-  const text = sanitize(raw);
+  const text = strip(raw);
 
   if (!/^[0-9]{20}$/.test(text)) return false;
 

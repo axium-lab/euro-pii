@@ -1,5 +1,13 @@
 import { defineEntity } from '../../core/entity';
-import { nieValid } from './checksums';
+import { DASH, SPACE } from '../../core/separators';
+import { CONTROL, nieValid } from './checksums';
+
+/** Seven digits (eight in the oldest ones), bare or grouped with dots. */
+const DIGITS = String.raw`(?:[0-9]?[0-9]{7}|[0-9]{1,2}\.[0-9]{3}\.[0-9]{3})`;
+
+const LETTER = `[${CONTROL}]`;
+
+const GAP = `(?:${SPACE}|${DASH})?`;
 
 /**
  * The prefix is mandatory here, and that is a deliberate divergence from
@@ -11,6 +19,8 @@ import { nieValid } from './checksums';
  * net is gone: with `[X-Z]?` a mistyped NIF surfaces as an ES_NIE. Requiring
  * the prefix removes the collision at the source instead of leaving an
  * arbitrary tie-break to decide the label.
+ *
+ * Split in two like `ES_NIF`: spaces only in the case-sensitive pattern.
  */
 export const ES_NIE = defineEntity({
   // ── Classification ──────────────────────────
@@ -25,8 +35,14 @@ export const ES_NIE = defineEntity({
   patterns: [
     {
       name: 'nie',
-      regex: String.raw`\b[X-Z][0-9]?[0-9]{7}[-]?[A-Z]\b`,
+      regex: String.raw`\b[XYZ]${DASH}?${DIGITS}${DASH}?${LETTER}\b`,
       score: 0.5,
+    },
+    {
+      name: 'nie-spaced',
+      regex: String.raw`\b[XYZ]${GAP}(?:${DIGITS}|[0-9]{1,2}${SPACE}[0-9]{3}${SPACE}[0-9]{3})${GAP}${LETTER}\b`,
+      score: 0.3,
+      caseSensitive: true,
     },
   ],
   validation: { kind: 'checksum', run: nieValid },

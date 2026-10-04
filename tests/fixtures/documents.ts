@@ -19,6 +19,7 @@ import { SE_EXPECTED, EXAMPLE_TEXT_ALL_SE_ENTITIES } from './se_document';
 
 export * from './de_document';
 export * from './es_document';
+export * from './es_formats';
 export * from './global_document';
 export * from './fi_document';
 export * from './gb_document';
