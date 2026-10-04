@@ -585,4 +585,4 @@ Most patterns, checksums and context words are ported from [Microsoft Presidio](
 
 ## License
 
-<!-- TODO: choose a licence and add a LICENSE file. Presidio's MIT notice must be kept for the ported patterns. -->
+[MIT](LICENSE) © 2026 Axium Lab. The [LICENSE](LICENSE) file also carries Microsoft Presidio's MIT notice, which covers the ported patterns.

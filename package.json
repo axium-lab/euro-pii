@@ -1,6 +1,6 @@
 {
   "name": "euro-pii",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Europe-first PII detection and anonymization: regex, checksums and context words. Zero dependencies.",
   "keywords": [
     "pii",
@@ -21,7 +21,7 @@
     "regex",
     "typescript"
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
@@ -35,11 +35,13 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",
-    "url": "git@ssh.dev.azure.com:v3/axium-lab/pocs/documentation-NER"
+    "url": "git@github.com:axium-lab/euro-pii.git"
   },
   "publishConfig": {
     "access": "public"
@@ -49,6 +51,7 @@
     "clean": "rm -rf dist",
     "prepare": "bun run build",
     "typecheck": "tsc --noEmit",
+    "test": "bun tests/methods/documents.ts && bun tests/methods/options.ts",
     "manual": "bun tests/manual.ts",
     "dev": "bun --watch tests/manual.ts"
   },
